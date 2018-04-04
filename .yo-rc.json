@@ -1,0 +1,20 @@
+{
+  "generator-plugin-wp": {
+    "name": "WP Primary Category",
+    "homepage": "http://pareshradadiya.github.io/wp-primary-category",
+    "description": "Allow to designate a primary category for posts and custom post types",
+    "version": "1.0.0",
+    "author": "Paresh",
+    "authoremail": "pareshpravin@gmail.com",
+    "authorurl": "https://pareshradadiya.github.io",
+    "license": "GPLv2",
+    "slug": "wp-primary-category",
+    "classname": "WP_Primary_Category",
+    "mainclassname": "WP_Primary_Category",
+    "classprefix": "WPPC_",
+    "prefix": "wppc",
+    "year": 2018,
+    "currentVersionWP": "4.8.1",
+    "plugingenversion": "0.20.2"
+  }
+}
