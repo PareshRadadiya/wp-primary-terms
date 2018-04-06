@@ -24,15 +24,15 @@
 		},
 
 		buildCache: function() {
-			this.categoryDiv = document.getElementById( 'taxonomy-' + this.taxonomy.taxonomy );
-			this.categoryLI  = this.categoryDiv.querySelectorAll( '.' + this.taxonomy.taxonomy + 'checklist li' );
+			this.categoryDiv = document.getElementById( 'taxonomy-' + this.taxonomy.name );
+			this.categoryLI  = this.categoryDiv.querySelectorAll( '.' + this.taxonomy.name + 'checklist li' );
 			this.setPrimaryButtonUI = primaryButtonUITemplate({ isPrimary: false });
 			this.unSetPrimaryButtonUI = primaryButtonUITemplate({ isPrimary: true });
 		},
 
 		render: function() {
-			this.categoryDiv.insertAdjacentHTML( 'beforeend', primaryInputUITemplate({taxonomy: this.taxonomy.taxonomy}) );
-			this.primaryInput = document.getElementById( '_wp_primary_' + this.taxonomy.taxonomy );
+			this.categoryDiv.insertAdjacentHTML( 'beforeend', primaryInputUITemplate(this.taxonomy) );
+			this.primaryInput = document.getElementById( '_wp_primary_' + this.taxonomy.name );
 			this.buildPrimaryTermsUI();
 		},
 
@@ -51,9 +51,12 @@
 
 				if ( catCheckBox.value === primaryTermID ) {
 					this.categoryLI[i].classList.add('primary-term');
+					this.categoryLI[i].insertAdjacentHTML( 'beforeend', this.unSetPrimaryButtonUI );
+				} else {
+					this.categoryLI[i].insertAdjacentHTML( 'beforeend', this.setPrimaryButtonUI );
 				}
 
-				this.categoryLI[i].insertAdjacentHTML( 'beforeend', this.setPrimaryButtonUI );
+
 			}
 		},
 
@@ -120,7 +123,7 @@
 		setPrimaryTerm: function( termID ) {
 			this.primaryInput.value = termID;
 			if ( 0 < termID.length ) {
-				document.getElementById( 'in-' + this.taxonomy.taxonomy + '-' + termID ).checked = true;
+				document.getElementById( 'in-' + this.taxonomy.name + '-' + termID ).checked = true;
 			}
 		}
 	};

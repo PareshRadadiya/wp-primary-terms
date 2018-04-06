@@ -12,13 +12,6 @@
  * @since 1.0.0
  */
 class WPPC_Primary_Terms_Settings {
-	/**
-	 * Parent plugin class.
-	 *
-	 * @var    WP_Primary_Category
-	 * @since  1.0.0
-	 */
-	protected $plugin = null;
 
 	/**
 	 * Option key, and option page slug.
@@ -58,8 +51,7 @@ class WPPC_Primary_Terms_Settings {
 	 *
 	 * @param  WP_Primary_Category $plugin Main plugin object.
 	 */
-	public function __construct( $plugin ) {
-		$this->plugin = $plugin;
+	public function __construct() {
 		$this->hooks();
 
 		// Set our title.
@@ -122,13 +114,16 @@ class WPPC_Primary_Terms_Settings {
 
         $taxonomies = get_taxonomies( array( 'hierarchical' => true ), 'objects' );
 
+		$settings = $this->get_settings();
+
 		?>
 
         <?php foreach ( $taxonomies as $taxonomy ):
+            $tax_name =  $taxonomy->name;
             ?>
-            <p class="taxonomy-<?php $taxonomy->name ?>">
-                <input type="checkbox" name="wp_primary_terms_settings[]" id="<?php echo $taxonomy->name ?>" value="<?php echo $taxonomy->name ?>">
-                <label for="<?php echo $taxonomy->name ?>"><?php echo $taxonomy->label ?></label>
+            <p class="taxonomy-<?php $tax_name ?>">
+                <input type="checkbox" name="wp_primary_terms_settings[]" id="<?php echo $tax_name ?>" value="<?php echo $tax_name ?>" <?php checked( in_array( $tax_name, $settings ) ) ?>>
+                <label for="<?php echo $tax_name ?>"><?php echo $taxonomy->label ?></label>
             </p>
         <?php endforeach; ?>
 
@@ -181,4 +176,19 @@ class WPPC_Primary_Terms_Settings {
 		</div>
 		<?php
 	}
+
+	/**
+     *
+	 * @return array
+	 */
+	public function get_settings() {
+		$settings = get_option( self::$key );
+
+		if ( false === $settings ) {
+			$settings = array( 'category' );
+		    update_option( self::$key, $settings );
+        }
+
+		return apply_filters( 'wppt_get_settings', (array) $settings );
+    }
 }
