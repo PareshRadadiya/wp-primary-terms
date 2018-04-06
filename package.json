@@ -53,5 +53,8 @@
 		"test": "dockunit",
 		"preversion": "npm test",
 		"version": "grunt version && git add ."
+	},
+	"dependencies": {
+		"generator-plugin-wp": "^0.20.2"
 	}
 }

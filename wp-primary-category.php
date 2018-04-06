@@ -89,6 +89,30 @@ final class WP_Primary_Category {
 	protected $primary_category_admin;
 
 	/**
+	 * Instance of WPPC_Wp_Primary_Terms_Admin
+	 *
+	 * @since1.0.0
+	 * @var WPPC_Wp_Primary_Terms_Admin
+	 */
+	protected $wp_primary_terms_admin;
+
+	/**
+	 * Instance of WPPC_Wp_primary_terms
+	 *
+	 * @since1.0.0
+	 * @var WPPC_Wp_primary_terms
+	 */
+	protected $wp_primary_terms;
+
+	/**
+	 * Instance of WPPC_Primary_Terms_Settings
+	 *
+	 * @since1.0.0
+	 * @var WPPC_Primary_Terms_Settings
+	 */
+	protected $primary_terms_settings;
+
+	/**
 	 * Creates or returns an instance of this class.
 	 *
 	 * @since   1.0.0
@@ -122,6 +146,7 @@ final class WP_Primary_Category {
 	public function includes() {
 	    include_once WPPC_PATH . 'includes/wppc-helpers.php';
 	    include_once WPPC_PATH . 'includes/admin/class-primary-category-admin.php';
+	    include_once WPPC_PATH . 'includes/admin/class-primary-terms-settings.php';
     }
 
 	/**
@@ -131,6 +156,7 @@ final class WP_Primary_Category {
 	 */
 	public function plugin_classes() {
 	    $this->primary_category_admin = new WPPC_Primary_Category_Admin( $this );
+		$this->primary_terms_settings = new WPPC_Primary_Terms_Settings( $this );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
