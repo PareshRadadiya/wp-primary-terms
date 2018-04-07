@@ -5,7 +5,7 @@
  * Copyright (c) 2018 Paresh
  * Licensed under the GPLv2+ license.
  */
-ul[id$='checklist'] {
+ul[id$='checklist'], ul[id$='checklist-pop']  {
   li {
 
     clear: both;

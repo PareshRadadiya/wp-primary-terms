@@ -42,20 +42,17 @@
 		},
 
 		buildPrimaryTermsUI: function() {
-			var catLILength = this.categoryLI.length,
-				primaryTermID = this.getPrimaryTerm();
+			let primaryTermID = this.getPrimaryTerm();
 
-			for ( var i = 0; i < catLILength; i++ ) {
-
-				var catCheckBox = this.categoryLI[i].querySelector('input[type=checkbox]');
+			for ( categoryLI of this.categoryLI ) {
+				let catCheckBox = categoryLI.querySelector('input[type=checkbox]');
 
 				if ( catCheckBox.value === primaryTermID ) {
-					this.categoryLI[i].classList.add('primary-term');
-					this.categoryLI[i].firstElementChild.insertAdjacentHTML( 'afterend', this.unSetPrimaryButtonUI );
+					categoryLI.classList.add('primary-term');
+					categoryLI.firstElementChild.insertAdjacentHTML( 'afterend', this.unSetPrimaryButtonUI );
 				} else {
-					this.categoryLI[i].firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
+					categoryLI.firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
 				}
-
 			}
 		},
 
@@ -81,20 +78,23 @@
 
 		togglePrimaryTermHandler: function(e) {
 
-			var
-				toggleButton = e.target,
-				buttonWrap   = toggleButton.parentNode,
-				currentLI    = buttonWrap.parentNode,
-				termCheckBox = currentLI.firstChild.firstChild,
-				termID       = termCheckBox.value;
+			let
+				termID       = e.target.closest('li').id.match(/-(\d+)$/)[1],
+				currentLIS   = this.categoryDiv.querySelectorAll(`#popular-${this.taxonomy.name}-${termID}, #${this.taxonomy.name}-${termID}`);
 
-			if ( ! currentLI.classList.contains('primary-term') ) {
+
+			if ( ! currentLIS[0].classList.contains('primary-term') && ! currentLIS[1].classList.contains('primary-term') ) {
 				// Reset
 				this.resetPrimaryTerm();
 				// Delete button
-				currentLI.removeChild(buttonWrap);
-				currentLI.firstElementChild.insertAdjacentHTML( 'afterend', this.unSetPrimaryButtonUI );
-				currentLI.classList.add('primary-term');
+
+				for ( let currentLI of currentLIS ) {
+					let primaryButtonWrap = currentLI.querySelector('span.primary-term-button');
+					currentLI.removeChild(primaryButtonWrap);
+					currentLI.firstElementChild.insertAdjacentHTML( 'afterend', this.unSetPrimaryButtonUI );
+					currentLI.classList.add('primary-term');
+				}
+
 				this.setPrimaryTerm( termID );
 			} else {
 				this.resetPrimaryTerm();
@@ -103,16 +103,15 @@
 		},
 
 		resetPrimaryTerm: function() {
-			var primaryCategoryLI = this.categoryDiv.querySelector('li.primary-term');
+			let primaryCategoryLIS = this.categoryDiv.querySelectorAll('li.primary-term');
 
-			if ( primaryCategoryLI ) {
-				var primaryButtonWrap = this.categoryDiv.querySelector('li.primary-term span.primary-term-button');
+			for ( let primaryCategoryLI of primaryCategoryLIS) {
+					let primaryButtonWrap = primaryCategoryLI.querySelector('span.primary-term-button');
 
-				primaryCategoryLI.classList.remove('primary-term');
-				primaryCategoryLI.removeChild(primaryButtonWrap);
-				primaryCategoryLI.firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
+					primaryCategoryLI.classList.remove('primary-term');
+					primaryCategoryLI.removeChild(primaryButtonWrap);
+					primaryCategoryLI.firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
 			}
-
 		},
 
 		getPrimaryTerm: function() {

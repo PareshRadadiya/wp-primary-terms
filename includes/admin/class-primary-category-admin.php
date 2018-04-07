@@ -86,7 +86,7 @@ class WPPC_Primary_Category_Admin {
             <span class="primary-term-button">
                 <a class="toggle-primary-term">{{ data.isPrimary ? '<?php _e( 'Reset Primary', 'wp-primary-terms' ) ?>' : '<?php _e( 'Set Primary', 'wp-primary-terms' ) ?>' }}</a>
                 <# if ( data.isPrimary ) { #>
-                 <label>Primary</label>
+                 <label><?php _e( 'Primary', 'wp-primary-terms' ) ?></label>
                 <# } #>
             </span>
 		</script>
