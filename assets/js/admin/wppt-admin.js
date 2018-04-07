@@ -44,7 +44,7 @@
 		buildPrimaryTermsUI: function() {
 			let primaryTermID = this.getPrimaryTerm();
 
-			for ( categoryLI of this.categoryLI ) {
+			for ( let categoryLI of this.categoryLI ) {
 				let catCheckBox = categoryLI.querySelector('input[type=checkbox]');
 
 				if ( catCheckBox.value === primaryTermID ) {

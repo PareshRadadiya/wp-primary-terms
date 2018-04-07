@@ -25,7 +25,7 @@ function _manually_load_wppc_plugin() {
 	}
 
 	// Require our plugin.
-	require dirname( dirname( __FILE__ ) ) . '/wp-primary-category.php';
+	require dirname(dirname(__FILE__)) . '/wp-primary-terms.php';
 }
 
 // Inject in our plugin.
