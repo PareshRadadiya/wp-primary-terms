@@ -127,9 +127,9 @@ module.exports = __webpack_require__(2);
 
 				if (catCheckBox.value === primaryTermID) {
 					this.categoryLI[i].classList.add('primary-term');
-					this.categoryLI[i].insertAdjacentHTML('beforeend', this.unSetPrimaryButtonUI);
+					this.categoryLI[i].firstElementChild.insertAdjacentHTML('afterend', this.unSetPrimaryButtonUI);
 				} else {
-					this.categoryLI[i].insertAdjacentHTML('beforeend', this.setPrimaryButtonUI);
+					this.categoryLI[i].firstElementChild.insertAdjacentHTML('afterend', this.setPrimaryButtonUI);
 				}
 			}
 		},
@@ -167,7 +167,7 @@ module.exports = __webpack_require__(2);
 				this.resetPrimaryTerm();
 				// Delete button
 				currentLI.removeChild(buttonWrap);
-				currentLI.insertAdjacentHTML('beforeend', this.unSetPrimaryButtonUI);
+				currentLI.firstElementChild.insertAdjacentHTML('afterend', this.unSetPrimaryButtonUI);
 				currentLI.classList.add('primary-term');
 				this.setPrimaryTerm(termID);
 			} else {
@@ -180,11 +180,11 @@ module.exports = __webpack_require__(2);
 			var primaryCategoryLI = this.categoryDiv.querySelector('li.primary-term');
 
 			if (primaryCategoryLI) {
-				var primaryButtonWrap = this.categoryDiv.querySelector('li.primary-term > span.primary-term-button');
+				var primaryButtonWrap = this.categoryDiv.querySelector('li.primary-term span.primary-term-button');
 
 				primaryCategoryLI.classList.remove('primary-term');
 				primaryCategoryLI.removeChild(primaryButtonWrap);
-				primaryCategoryLI.insertAdjacentHTML('beforeend', this.setPrimaryButtonUI);
+				primaryCategoryLI.firstElementChild.insertAdjacentHTML('afterend', this.setPrimaryButtonUI);
 			}
 		},
 

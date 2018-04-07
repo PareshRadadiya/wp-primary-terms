@@ -8,26 +8,25 @@
 ul[id$='checklist'] {
   li {
 
-    display: table;
-    table-layout: fixed;
-    width: 100%;
+    clear: both;
 
     & > label {
-      display: table-cell;
-      word-break: break-all;
-      white-space: nowrap;
+      display: inline-block;
     }
 
     span.primary-term-button {
       display: none;
-      word-break: break-all;
       text-align: right;
-      width: 99%;
+      float: right;
+
+      .toggle-primary-term {
+        cursor: pointer;
+      }
     }
 
     &:hover {
       span.primary-term-button {
-        display: table-cell;
+        display: inline-block;
       }
     }
 
@@ -38,7 +37,7 @@ ul[id$='checklist'] {
       }
 
       span.primary-term-button {
-        display: table-cell;
+        display: inline-block;
         .toggle-primary-term {
           display: none;
         }
