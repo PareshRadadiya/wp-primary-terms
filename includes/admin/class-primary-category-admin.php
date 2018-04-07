@@ -64,9 +64,9 @@ class WPPC_Primary_Category_Admin {
 			return;
 		}
 
-		wp_enqueue_script( 'wp-primary-category-admin', WPPC_URL . 'assets/js/wp-primary-category.js', array(), WPPC_VERSION );
+		wp_enqueue_script( 'wp-primary-category-admin', WPPC_URL . 'assets/dist/js/admin.js', array(), WPPC_VERSION );
 
-		wp_enqueue_style( 'wp-primary-category-admin', WPPC_URL . 'assets/css/styles.css', array(), WPPC_VERSION );
+		wp_enqueue_style( 'wp-primary-category-admin', WPPC_URL . 'assets/dist/css/admin.css', array(), WPPC_VERSION );
 
 		$tax_data = array();
 
@@ -83,8 +83,11 @@ class WPPC_Primary_Category_Admin {
 	public function print_primary_category_templates() {
 	    ?>
         <script type="text/html" id="tmpl-wpt-primary-term-button">
-            <span class="primary-term">
-                <a class="toggle-primary-term">{{ data.isPrimary ? '<?php _e( 'Reset Primary' ) ?>' : '<?php _e( 'Set Primary' ) ?>' }}</a>
+            <span class="primary-term-button">
+                <a class="toggle-primary-term">{{ data.isPrimary ? '<?php _e( 'Reset Primary', 'wp-primary-terms' ) ?>' : '<?php _e( 'Set Primary', 'wp-primary-terms' ) ?>' }}</a>
+                <# if ( data.isPrimary ) { #>
+                 <label>Primary</label>
+                <# } #>
             </span>
 		</script>
         <script type="text/html" id="tmpl-wpt-primary-term-input">

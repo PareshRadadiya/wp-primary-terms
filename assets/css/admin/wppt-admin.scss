@@ -1,0 +1,62 @@
+/**
+ * WP Primary Category
+ * http://pareshradadiya.github.io/wp-primary-category
+ *
+ * Copyright (c) 2018 Paresh
+ * Licensed under the GPLv2+ license.
+ */
+ul[id$='checklist'] {
+  li {
+
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+
+    & > label {
+      display: table-cell;
+      word-break: break-all;
+      white-space: nowrap;
+    }
+
+    span.primary-term-button {
+      display: none;
+      word-break: break-all;
+      text-align: right;
+      width: 99%;
+    }
+
+    &:hover {
+      span.primary-term-button {
+        display: table-cell;
+      }
+    }
+
+    &.primary-term {
+
+      label {
+        font-weight: bold;
+      }
+
+      span.primary-term-button {
+        display: table-cell;
+        .toggle-primary-term {
+          display: none;
+        }
+      }
+
+      &:hover {
+        span.primary-term-button {
+          label {
+            display: none;
+          }
+          .toggle-primary-term {
+            display: block;
+            color: #a00;
+          }
+        }
+      }
+
+    }
+
+  }
+}

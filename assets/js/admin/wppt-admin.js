@@ -56,7 +56,6 @@
 					this.categoryLI[i].insertAdjacentHTML( 'beforeend', this.setPrimaryButtonUI );
 				}
 
-
 			}
 		},
 
@@ -107,7 +106,7 @@
 			var primaryCategoryLI = this.categoryDiv.querySelector('li.primary-term');
 
 			if ( primaryCategoryLI ) {
-				var primaryButtonWrap = this.categoryDiv.querySelector('li.primary-term > span.primary-term');
+				var primaryButtonWrap = this.categoryDiv.querySelector('li.primary-term > span.primary-term-button');
 
 				primaryCategoryLI.classList.remove('primary-term');
 				primaryCategoryLI.removeChild(primaryButtonWrap);
