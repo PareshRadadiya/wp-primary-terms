@@ -18,7 +18,6 @@ defined( 'ABSPATH' ) || exit;
  */
 function wppt_get_primary_taxonomies( $post = null ) {
 
-	// Bailout.
 	if ( ! is_a( $post, 'WP_Post' ) ) {
 		$post = get_post();
 	}

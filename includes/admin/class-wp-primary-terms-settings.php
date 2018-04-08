@@ -34,7 +34,7 @@ class WP_Primary_Terms_Settings {
 	 * Return singleton instance of class
 	 *
 	 * @return object
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
 	public static function get_instance() {
 		static $instance = null;
@@ -49,8 +49,6 @@ class WP_Primary_Terms_Settings {
 	 * Handles registering hooks that initialize this plugin settings.
 	 *
 	 * @since  1.0.0
-	 *
-	 * @param  void
 	 */
 	public function setup() {
 		// Hook in our actions to the admin.
@@ -88,7 +86,7 @@ class WP_Primary_Terms_Settings {
 	 *
 	 * Renders registered taxonomies checkbox list
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 * @param array $args Arguments passed by the setting
 	 * @return void
 	 */
@@ -116,7 +114,7 @@ class WP_Primary_Terms_Settings {
 	/**
 	 * Add menu options page.
 	 *
-	 * @since  1.0
+	 * @since  1.0.0
 	 */
 	public function add_options_page() {
 		add_menu_page(
@@ -134,12 +132,11 @@ class WP_Primary_Terms_Settings {
 	 * @since  1.0.0
 	 */
 	public function settings_screen() {
+
 		// check user capabilities
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
-		}
-
-		?>
+		} ?>
 		<div class="wrap options-page <?php echo esc_attr( self::OPTION_KEY ); ?>">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
             <form action="options.php" method="post">
@@ -160,7 +157,7 @@ class WP_Primary_Terms_Settings {
 	/**
 	 * Retrieve the array of plugin settings.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_settings() {

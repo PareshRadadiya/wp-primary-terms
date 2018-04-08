@@ -7,8 +7,7 @@
 
 ;( function( window, document, $ ) {
 
-	var primaryButtonUITemplate,
-		primaryInputUITemplate;
+	var primaryButtonUITemplate;
 
 	var PrimaryTerms = function( taxonomy ) {
 		this.taxonomy = taxonomy;
@@ -24,15 +23,16 @@
 		},
 
 		buildCache: function() {
-			this.categoryDiv = document.getElementById( 'taxonomy-' + this.taxonomy.name );
-			this.categoryLI  = this.categoryDiv.querySelectorAll( '.' + this.taxonomy.name + 'checklist li' );
+			this.categoryDiv = document.getElementById( `taxonomy-${this.taxonomy.name}` );
+			this.categoryLI  = this.categoryDiv.querySelectorAll( `.${this.taxonomy.name}checklist li` );
+			this.primaryInputUITemplate = wp.template( `wpt-primary-${this.taxonomy.name}-input` );
 			this.setPrimaryButtonUI = primaryButtonUITemplate({ isPrimary: false });
 			this.unSetPrimaryButtonUI = primaryButtonUITemplate({ isPrimary: true });
 		},
 
 		render: function() {
-			this.categoryDiv.insertAdjacentHTML( 'beforeend', primaryInputUITemplate(this.taxonomy) );
-			this.primaryInput = document.getElementById( '_wp_primary_' + this.taxonomy.name );
+			this.categoryDiv.insertAdjacentHTML( 'beforeend', this.primaryInputUITemplate(this.taxonomy) );
+			this.primaryInput = document.getElementById( `_wp_primary_${this.taxonomy.name}` );
 			this.buildPrimaryTermsUI();
 		},
 
@@ -83,7 +83,7 @@
 				currentLIS   = this.categoryDiv.querySelectorAll(`#popular-${this.taxonomy.name}-${termID}, #${this.taxonomy.name}-${termID}`);
 
 
-			if ( ! currentLIS[0].classList.contains('primary-term') && ! currentLIS[1].classList.contains('primary-term') ) {
+			if ( ! currentLIS[0].classList.contains('primary-term') ) {
 				// Reset
 				this.resetPrimaryTerm();
 				// Delete button
@@ -121,14 +121,13 @@
 		setPrimaryTerm: function( termID ) {
 			this.primaryInput.value = termID;
 			if ( 0 < termID.length ) {
-				document.getElementById( 'in-' + this.taxonomy.name + '-' + termID ).checked = true;
+				document.getElementById( `in-${this.taxonomy.name}-${termID}` ).checked = true;
 			}
 		}
 	};
 
 	window.onload = function() {
 		primaryButtonUITemplate = wp.template('wpt-primary-term-button');
-		primaryInputUITemplate = wp.template('wpt-primary-term-input');
 
 		var taxonomiesLength = wptPrimaryTaxonomies.length;
 		for( var i = 0; i < taxonomiesLength; i++ ) {
