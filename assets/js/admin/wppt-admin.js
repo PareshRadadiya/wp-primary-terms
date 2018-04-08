@@ -5,58 +5,83 @@
  * Licensed under the GPLv2+ license.
  */
 
-;( function( window, document, $ ) {
+;( function( window, document, undefined ) {
+	'use strict';
 
-	var primaryButtonUITemplate;
+	let primaryButtonUITemplate;
 
-	var PrimaryTerms = function( taxonomy ) {
-		this.taxonomy = taxonomy;
-	};
+	class WPPrimaryTerms {
 
-	PrimaryTerms.prototype = {
+		/**
+		 * Constructor
+		 * @param taxonomy
+		 */
+		constructor( taxonomy ) {
+			this.taxonomy = taxonomy;
+		}
 
-		init: function() {
+		/**
+		 * Initializations
+		 */
+		init() {
 			this.buildCache();
 			this.render();
 			this.bindEvents();
-			return this;
-		},
+		}
 
-		buildCache: function() {
+		/**
+		 *  Build cache
+		 */
+		buildCache() {
 			this.categoryDiv = document.getElementById( `taxonomy-${this.taxonomy.name}` );
-			this.categoryLI  = this.categoryDiv.querySelectorAll( `.${this.taxonomy.name}checklist li` );
+			this.termListItems  = this.categoryDiv.querySelectorAll( `.${this.taxonomy.name}checklist li` );
 			this.primaryInputUITemplate = wp.template( `wpt-primary-${this.taxonomy.name}-input` );
 			this.setPrimaryButtonUI = primaryButtonUITemplate({ isPrimary: false });
 			this.unSetPrimaryButtonUI = primaryButtonUITemplate({ isPrimary: true });
-		},
+		}
 
-		render: function() {
+		/**
+		 * Do render
+		 */
+		render() {
 			this.categoryDiv.insertAdjacentHTML( 'beforeend', this.primaryInputUITemplate(this.taxonomy) );
 			this.primaryInput = document.getElementById( `_wp_primary_${this.taxonomy.name}` );
 			this.buildPrimaryTermsUI();
-		},
+		}
 
-		bindEvents: function() {
+		/**
+		 * Event listeners
+		 */
+		bindEvents() {
 			this.clickHandler = this.clickHandler.bind(this);
 			this.categoryDiv.addEventListener( 'click', this.clickHandler );
-		},
+		}
 
-		buildPrimaryTermsUI: function() {
+		/**
+		 * Add Set/Reset button in all category list items
+		 */
+		buildPrimaryTermsUI() {
 			let primaryTermID = this.getPrimaryTerm();
 
-			for ( let categoryLI of this.categoryLI ) {
-				let catCheckBox = categoryLI.querySelector('input[type=checkbox]');
+			for ( let termListItem of this.termListItems ) {
+				let catCheckBox = termListItem.querySelector('input[type=checkbox]');
 
+				// If current list item has primary term, add "Rest Primary" button
 				if ( catCheckBox.value === primaryTermID ) {
-					categoryLI.classList.add('primary-term');
-					categoryLI.firstElementChild.insertAdjacentHTML( 'afterend', this.unSetPrimaryButtonUI );
+					termListItem.classList.add('primary-term');
+					termListItem.firstElementChild.insertAdjacentHTML( 'afterend', this.unSetPrimaryButtonUI );
 				} else {
-					categoryLI.firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
+					// Otherwise, add "Set Primary" button
+					termListItem.firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
 				}
 			}
-		},
+		}
 
-		clickHandler: function(e) {
+		/**
+		 * Click event handler
+		 * @param  {Event} e The Click event
+		 */
+		clickHandler(e) {
 
 			// Only run if the target is in a category div
 			if ( ! e.target ) return;
@@ -67,73 +92,97 @@
 				e.preventDefault();
 				this.togglePrimaryTermHandler(e)
 			}
-		},
+		}
 
-		termCheckHandler: function(e) {
+		/**
+		 * Term checked event handler
+		 * @param  {Event} e The Check event
+		 */
+		termCheckHandler(e) {
 			if ( e.target.parentNode.parentNode.classList.contains('primary-term') ) {
-				this.resetPrimaryTerm();
-				this.setPrimaryTerm('');
+				this.resetPrimaryTermListItems();
+				this.setPrimaryTerm();
 			}
-		},
+		}
 
-		togglePrimaryTermHandler: function(e) {
+		/**
+		 * Set/Reset Primary button click handler
+		 * @param  {Event} e The Click event
+		 */
+		togglePrimaryTermHandler(e) {
 
 			let
-				termID       = e.target.closest('li').id.match(/-(\d+)$/)[1],
-				currentLIS   = this.categoryDiv.querySelectorAll(`#popular-${this.taxonomy.name}-${termID}, #${this.taxonomy.name}-${termID}`);
+				termID       = e.target.closest('li').id.match(/-(\d+)$/)[1], // Fetch a term id from the li ID attribute
+				listItems   = this.categoryDiv.querySelectorAll(`#popular-${this.taxonomy.name}-${termID}, #${this.taxonomy.name}-${termID}`);
 
-
-			if ( ! currentLIS[0].classList.contains('primary-term') ) {
-				// Reset
-				this.resetPrimaryTerm();
-				// Delete button
-
-				for ( let currentLI of currentLIS ) {
-					let primaryButtonWrap = currentLI.querySelector('span.primary-term-button');
-					currentLI.removeChild(primaryButtonWrap);
-					currentLI.firstElementChild.insertAdjacentHTML( 'afterend', this.unSetPrimaryButtonUI );
-					currentLI.classList.add('primary-term');
-				}
-
+			// Set primary term
+			if ( ! listItems[0].classList.contains('primary-term') ) {
+				this.setPrimaryTermListItems( listItems );
+				// Store term id into hidden input
 				this.setPrimaryTerm( termID );
 			} else {
-				this.resetPrimaryTerm();
-				this.setPrimaryTerm('');
+				// Reset primary term
+				this.resetPrimaryTermListItems();
+				this.setPrimaryTerm();
 			}
-		},
+		}
 
-		resetPrimaryTerm: function() {
-			let primaryCategoryLIS = this.categoryDiv.querySelectorAll('li.primary-term');
+		/**
+		 * Set primary term list items
+		 * @param termListItems
+		 */
+		setPrimaryTermListItems( termListItems ) {
+			// Reset a previously set primary term, if any.
+			this.resetPrimaryTermListItems();
 
-			for ( let primaryCategoryLI of primaryCategoryLIS) {
-					let primaryButtonWrap = primaryCategoryLI.querySelector('span.primary-term-button');
-
-					primaryCategoryLI.classList.remove('primary-term');
-					primaryCategoryLI.removeChild(primaryButtonWrap);
-					primaryCategoryLI.firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
+			for ( let termListItem of termListItems ) {
+				let primaryButtonWrap = termListItem.querySelector('span.primary-term-button');
+				termListItem.removeChild(primaryButtonWrap); // Remove "Set Primary" button wrap
+				// Insert "Reset Primary" button
+				termListItem.firstElementChild.insertAdjacentHTML( 'afterend', this.unSetPrimaryButtonUI );
+				termListItem.classList.add('primary-term'); // Add 'primary-term' class to list item
 			}
-		},
 
-		getPrimaryTerm: function() {
+		}
+
+		/**
+		 * Reset primary term list terms
+		 */
+		resetPrimaryTermListItems() {
+			let primaryTermListItems = this.categoryDiv.querySelectorAll('li.primary-term');
+
+			for ( let primaryTermListItem of primaryTermListItems) {
+				let primaryButtonWrap = primaryTermListItem.querySelector('span.primary-term-button');
+
+				primaryTermListItem.classList.remove('primary-term'); // Remove primary-term class from LI
+				primaryTermListItem.removeChild(primaryButtonWrap); // Delete "Reset Primary" button wrap
+				primaryTermListItem.firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
+			}
+		}
+
+		/**
+		 * Return the primary term id
+		 */
+		getPrimaryTerm() {
 			return this.primaryInput.value;
-		},
+		}
 
-		setPrimaryTerm: function( termID ) {
+		/**
+		 * Set a primary term id into hidden input
+		 * @param termID
+		 */
+		setPrimaryTerm( termID = 0 ) {
 			this.primaryInput.value = termID;
-			if ( 0 < termID.length ) {
+			if ( 0 < termID ) {
 				document.getElementById( `in-${this.taxonomy.name}-${termID}` ).checked = true;
 			}
 		}
-	};
+	}
 
 	window.onload = function() {
 		primaryButtonUITemplate = wp.template('wpt-primary-term-button');
-
-		var taxonomiesLength = wptPrimaryTaxonomies.length;
-		for( var i = 0; i < taxonomiesLength; i++ ) {
-			new PrimaryTerms( wptPrimaryTaxonomies[i] ).init();
-		}
+		// Loop through each taxonomy and init WPPrimaryTerms class
+		wptPrimaryTaxonomies.map( taxonomy => new WPPrimaryTerms( taxonomy ).init() );
 	};
 
-	// execute init on each taxonomy
-}( window, document, jQuery ) );
+}( window, document ) );

@@ -13,10 +13,26 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: includes/admin/class-primary-category-admin.php:87
+#: includes/admin/class-wp-primary-terms-admin.php:135
 msgid "Reset Primary"
 msgstr ""
 
-#: includes/admin/class-primary-category-admin.php:87
+#: includes/admin/class-wp-primary-terms-admin.php:135
 msgid "Set Primary"
+msgstr ""
+
+#: includes/admin/class-wp-primary-terms-admin.php:137
+msgid "Primary"
+msgstr ""
+
+#: includes/admin/class-wp-primary-terms-settings.php:89
+msgid "Taxonomies"
+msgstr ""
+
+#: includes/admin/class-wp-primary-terms-settings.php:109
+msgid "Settings updated."
+msgstr ""
+
+#: includes/admin/class-wp-primary-terms-settings.php:152
+msgid "Primary Terms"
 msgstr ""
