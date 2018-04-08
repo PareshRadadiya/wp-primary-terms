@@ -69,9 +69,12 @@ class WP_Primary_Terms_Admin {
 			return;
 		}
 
+		// RTL CSS
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		// Enqueue admin scripts and styles
 		wp_enqueue_script( 'wp-primary-category-admin', WPPT_URL . 'assets/dist/js/admin.js', array(), WPPT_VERSION );
-		wp_enqueue_style( 'wp-primary-category-admin', WPPT_URL . 'assets/dist/css/admin.css', array(), WPPT_VERSION );
+		wp_enqueue_style( 'wp-primary-category-admin', WPPT_URL . 'assets/dist/css/admin'. $rtl .'.css', array(), WPPT_VERSION );
 
 		$tax_data = array();
 
