@@ -25,6 +25,14 @@ class WP_Primary_Terms_Settings {
 	CONST OPTION_KEY = 'wp_primary_terms_settings';
 
 	/**
+	 * Settings notice slug
+     *
+     * @var string
+     * @since 1.0.0
+	 */
+	CONST NOTICE_KEY = self::OPTION_KEY.'-notices';
+
+	/**
      * Setting page title
 	 * @var
 	 */
@@ -54,7 +62,7 @@ class WP_Primary_Terms_Settings {
 		// Hook in our actions to the admin.
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this, 'add_options_page' ) );
-
+        add_action( 'admin_notice', array( $this, '' ) );
 		// Set our title.
 		$this->title = esc_attr__( 'WP Primary Terms Settings', 'wp-primary-category' );
 	}
@@ -66,7 +74,11 @@ class WP_Primary_Terms_Settings {
 	 */
 	public function register_settings() {
 	    // Creates our settings in the options table
-		register_setting( self::OPTION_KEY, self::OPTION_KEY );
+		register_setting(
+		        self::OPTION_KEY,
+                self::OPTION_KEY,
+                array( 'sanitize_callback' => array( $this, 'settings_sanitize' ) )
+        );
 
 		// Create settings section
 		add_settings_section( 'wppt_general_section', null, null,  self::OPTION_KEY );
@@ -79,6 +91,24 @@ class WP_Primary_Terms_Settings {
                 self::OPTION_KEY,
                 'wppt_general_section'
 		);
+	}
+
+	/**
+	 * Settings Sanitization
+	 *
+	 * Adds a settings error (for the updated message)
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $input The value inputted in the field
+	 *
+	 * @return array $input Sanitized value
+	 */
+	public function settings_sanitize( $input = array() ) {
+		if ( isset( $_POST['_wp_http_referer'] ) ) {
+			add_settings_error( self::NOTICE_KEY, '', __( 'Settings updated.', 'wp-primary-terms' ), 'updated' );
+		}
+		return $input;
 	}
 
 	/**
@@ -119,7 +149,7 @@ class WP_Primary_Terms_Settings {
 	public function add_options_page() {
 		add_menu_page(
 			$this->title,
-			$this->title,
+			__( 'Primary Terms', 'wp-primary-terms' ),
 			'manage_options',
 			self::OPTION_KEY,
 			array( $this, 'settings_screen' )
@@ -136,9 +166,12 @@ class WP_Primary_Terms_Settings {
 		// check user capabilities
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
+
 		} ?>
 		<div class="wrap options-page <?php echo esc_attr( self::OPTION_KEY ); ?>">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+            <?php settings_errors( self::NOTICE_KEY ); ?>
+
             <form action="options.php" method="post">
 				<?php
 				//  Renders the options page contents.
