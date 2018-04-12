@@ -5,32 +5,52 @@
  * @since   1.0.0
  * @package WP_Primary_Category
  */
-class WPPC_Wp_primary_terms_Test extends WP_UnitTestCase {
+class Test_WP_Primary_Terms extends WP_UnitTestCase {
+
+	protected $object;
+
+	public function setup() {
+		parent::setUp();
+		$this->object = wppt()::get_instance();
+	}
+
+	public function tearDown() {
+		parent::tearDown();
+	}
 
 	/**
 	 * Test if our class exists.
 	 *
 	 * @since  1.0.0
 	 */
-	function test_class_exists() {
-		$this->assertTrue( class_exists( 'WPPC_Wp_primary_terms') );
+	public function testClassExists() {
+		$this->assertTrue( class_exists( 'WP_Primary_Terms' ) );
+	}
+
+	public function testWPPrimaryTermsInstance() {
+		$this->assertClassHasStaticAttribute( 'instance', 'WP_Primary_Terms' );
 	}
 
 	/**
-	 * Test that we can access our class through our helper function.
-	 *
-	 * @since  1.0.0
+	 * @covers WP_Primary_Terms::define_constants
 	 */
-	function test_class_access() {
-		$this->assertInstanceOf( 'WPPC_Wp_primary_terms', wppc()->wp-primary-terms );
+	public function testConstants() {
+		// Plugin Folder URL
+		$path = plugin_dir_url( dirname( __FILE__ ) );
+		$this->assertSame( WPPT_URL, $path );
+
+		// Plugin Folder Path
+		$path = plugin_dir_path( dirname( __FILE__ )  );
+		$this->assertSame( WPPT_ABSPATH, $path );
 	}
 
 	/**
-	 * Replace this with some actual testing code.
-	 *
-	 * @since  1.0.0
+	 * @covers WP_Primary_Terms::includes
 	 */
-	function test_sample() {
-		$this->assertTrue( true );
+	public function testIncludes() {
+		$this->assertFileExists( WPPT_ABSPATH . 'includes/functions.php' );
+		$this->assertFileExists( WPPT_ABSPATH . 'includes/admin/class-wp-primary-terms-settings.php' );
+		$this->assertFileExists( WPPT_ABSPATH . 'includes/admin/class-wp-primary-terms-admin.php' );
 	}
+
 }

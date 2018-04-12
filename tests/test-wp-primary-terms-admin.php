@@ -1,36 +1,33 @@
 <?php
 /**
- * WP Primary Category Wp Primary Terms Admin Tests.
+ * WP Primary Category Wp_primary_terms Tests.
  *
  * @since   1.0.0
  * @package WP_Primary_Category
  */
-class WPPC_Wp_Primary_Terms_Admin_Test extends WP_UnitTestCase {
+class Test_WP_Primary_Terms_Admin extends WP_UnitTestCase {
 
 	/**
-	 * Test if our class exists.
-	 *
-	 * @since  1.0.0
+	 * @var WP_Primary_Terms_Admin
 	 */
-	function test_class_exists() {
-		$this->assertTrue( class_exists( 'WPPC_Wp_Primary_Terms_Admin') );
+	private static $class_instance;
+
+	public function setup() {
+		parent::setUp();
 	}
 
 	/**
-	 * Test that we can access our class through our helper function.
-	 *
-	 * @since  1.0.0
+	 * Set up the class which will be tested.
 	 */
-	function test_class_access() {
-		$this->assertInstanceOf( 'WPPC_Wp_Primary_Terms_Admin', wppc()->wp-primary-terms-admin );
+	public static function setUpBeforeClass() {
+		parent::setUpBeforeClass();
+		self::$class_instance = WP_Primary_Terms_Admin::get_instance();
 	}
 
-	/**
-	 * Replace this with some actual testing code.
-	 *
-	 * @since  1.0.0
-	 */
-	function test_sample() {
-		$this->assertTrue( true );
+	public function testSetup() {
+
+		$this->assertNotFalse( has_action( 'admin_enqueue_scripts', array( self::$class_instance, 'include_scripts' ) ) );
+		$this->assertNotFalse( has_action( 'admin_footer', array( self::$class_instance, 'print_primary_terms_templates' ) ) );
+		$this->assertNotFalse( has_action( 'save_post', array( self::$class_instance, 'save_primary_terms' ) ) );
 	}
 }

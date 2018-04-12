@@ -29,7 +29,7 @@ function wppt_get_primary_taxonomies( $post = null ) {
 
 	// Setup primary taxonomies array that are enabled in the settings.
 	foreach ( $taxonomies as $taxonomy ) {
-		if ( in_array( $taxonomy, $settings ) ) {
+		if ( in_array( $taxonomy, $settings ) && is_taxonomy_hierarchical( $taxonomy ) ) {
 			$primary_taxonomies[] = $taxonomy;
 		}
 	}

@@ -49,6 +49,15 @@
 final class WP_Primary_Terms {
 
 	/**
+	 * Instance of this class.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      object   $instance   A single instance of this class.
+	 */
+	private static $instance = null;
+
+	/**
 	 * Current version.
 	 *
 	 * @var    string
@@ -63,12 +72,11 @@ final class WP_Primary_Terms {
 	 * @return  WP_Primary_Terms instance of this class.
 	 */
 	public static function get_instance() {
-		static $instance = false;
-		if ( ! $instance ) {
-			$instance = new self();
-			$instance->setup();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+			self::$instance->setup();
 		}
-		return $instance;
+		return self::$instance;
 	}
 
 	/**
