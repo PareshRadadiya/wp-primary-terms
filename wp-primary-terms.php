@@ -103,10 +103,10 @@ final class WP_Primary_Terms {
 	 * Include required core files used in admin.
 	 */
 	public function includes() {
-	    include_once WPPT_ABSPATH . 'includes/functions.php';
+		include_once WPPT_ABSPATH . 'includes/functions.php';
 		include_once WPPT_ABSPATH . 'includes/admin/class-wp-primary-terms-settings.php';
-	    include_once WPPT_ABSPATH . 'includes/admin/class-wp-primary-terms-admin.php';
-    }
+		include_once WPPT_ABSPATH . 'includes/admin/class-wp-primary-terms-admin.php';
+	}
 
 	/**
 	 * Init plugin when WordPress Initialises.
@@ -132,8 +132,8 @@ final class WP_Primary_Terms {
 }
 
 /**
- * Grab the WP_Primary_Category object and return it.
- * Wrapper for WP_Primary_Category::get_instance().
+ * Grab the WP_Primary_Terms object and return it.
+ * Wrapper for WP_Primary_Terms::get_instance().
  *
  * @since  1.0.0
  * @return WP_Primary_Terms instance of plugin class.

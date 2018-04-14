@@ -63,7 +63,7 @@ class WP_Primary_Terms_Settings {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this, 'add_options_page' ) );
 		// Set our title.
-		$this->title = esc_attr__( 'WP Primary Terms Settings', 'wp-primary-category' );
+		$this->title = esc_attr__( 'WP Primary Terms Settings', 'wp-primary-terms' );
 	}
 
 	/**

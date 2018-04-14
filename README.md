@@ -1,6 +1,6 @@
-# WP Primary Category #
+# WP Primary Terms #
 **Contributors:**      Paresh  
-**Donate link:**       http://pareshradadiya.github.io/wp-primary-category  
+**Donate link:**       http://pareshradadiya.github.io/wp-primary-terms  
 **Tags:**  
 **Requires at least:** 4.4  
 **Tested up to:**      4.8.1 
@@ -16,8 +16,8 @@ Allow to designate a primary category for posts and custom post types
 
 ### Manual Installation ###
 
-1. Upload the entire `/wp-primary-category` directory to the `/wp-content/plugins/` directory.
-2. Activate WP Primary Category through the 'Plugins' menu in WordPress.
+1. Upload the entire `/wp-primary-terms` directory to the `/wp-content/plugins/` directory.
+2. Activate WP Primary Terms through the 'Plugins' menu in WordPress.
 
 ## Frequently Asked Questions ##
 

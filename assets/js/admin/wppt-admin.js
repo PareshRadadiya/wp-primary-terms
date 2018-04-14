@@ -1,6 +1,6 @@
 /**
- * WP Primary Category
- * http://pareshradadiya.github.io/wp-primary-category
+ * WP Primary Terms
+ * http://pareshradadiya.github.io/wp-primary-terms
  *
  * Licensed under the GPLv2+ license.
  */
@@ -31,9 +31,9 @@
 		 *  Build cache
 		 */
 		buildCache() {
-			this.categoryDiv = document.getElementById( `taxonomy-${ this.taxonomy.name }` );
+			this.taxonomyMetaBox = document.getElementById( `taxonomy-${ this.taxonomy.name }` );
 			this.$checkList = $( document.getElementById( `${ this.taxonomy.name }checklist` ) );
-			this.termListItems = this.categoryDiv.querySelectorAll( `.${ this.taxonomy.name }checklist li` );
+			this.termListItems = this.taxonomyMetaBox.querySelectorAll( `.${ this.taxonomy.name }checklist li` );
 			this.primaryInputUITemplate = wp.template( `wpt-primary-${ this.taxonomy.name }-input` );
 			this.setPrimaryButtonUI = primaryButtonUITemplate( { isPrimary: false } );
 			this.unSetPrimaryButtonUI = primaryButtonUITemplate( { isPrimary: true } );
@@ -43,7 +43,7 @@
 		 * Do render
 		 */
 		render() {
-			this.categoryDiv.insertAdjacentHTML( 'beforeend', this.primaryInputUITemplate( this.taxonomy ) );
+			this.taxonomyMetaBox.insertAdjacentHTML( 'beforeend', this.primaryInputUITemplate( this.taxonomy ) );
 			this.primaryInput = document.getElementById( `_wp_primary_${ this.taxonomy.name }` );
 			this.buildPrimaryTermsUI();
 		}
@@ -53,7 +53,7 @@
 		 */
 		bindEvents() {
 			this.clickHandler = this.clickHandler.bind( this );
-			this.categoryDiv.addEventListener( 'click', this.clickHandler );
+			this.taxonomyMetaBox.addEventListener( 'click', this.clickHandler );
 			this.$checkList.on( 'wpListAddEnd', this.handleNewTermAdded.bind( this ) );
 		}
 
@@ -82,7 +82,7 @@
 		 * @param  {Event} e The Click event
 		 */
 		clickHandler( e ) {
-			// Only run if the target is in a category div
+			// Only run if the target is in a taxonomy meta div
 			if ( ! e.target ) {
 				return;
 			}
@@ -122,7 +122,7 @@
 		togglePrimaryTermHandler( e ) {
 			const
 				termID = e.target.closest( 'li' ).id.match( /-(\d+)$/ )[ 1 ], // Fetch a term id from the li ID attribute
-				listItems = this.categoryDiv.querySelectorAll( `#popular-${ this.taxonomy.name }-${ termID }, #${ this.taxonomy.name }-${ termID }` );
+				listItems = this.taxonomyMetaBox.querySelectorAll( `#popular-${ this.taxonomy.name }-${ termID }, #${ this.taxonomy.name }-${ termID }` );
 
 			// Set primary term
 			if ( ! listItems[ 0 ].classList.contains( 'primary-term' ) ) {
@@ -157,7 +157,7 @@
 		 * Reset primary term list terms
 		 */
 		resetPrimaryTermListItems() {
-			const primaryTermListItems = this.categoryDiv.querySelectorAll( 'li.primary-term' );
+			const primaryTermListItems = this.taxonomyMetaBox.querySelectorAll( 'li.primary-term' );
 
 			for ( const primaryTermListItem of primaryTermListItems ) {
 				const primaryButtonWrap = primaryTermListItem.querySelector( 'span.primary-term-button' );

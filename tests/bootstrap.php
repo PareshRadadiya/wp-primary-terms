@@ -1,9 +1,9 @@
 <?php
 /**
- * WP_Primary_Category Test Bootstrapper.
+ * WP_Primary_Terms Test Bootstrapper.
  *
  * @since   1.0.0
- * @package WP_Primary_Category
+ * @package WP_Primary_Terms
  */
 
 // Get our tests directory.

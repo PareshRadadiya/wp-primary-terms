@@ -1,9 +1,9 @@
 <?php
 /**
- * WP Primary Category Wp_primary_terms Tests.
+ * WP Primary Terms Wp_primary_terms Tests.
  *
  * @since   1.0.0
- * @package WP_Primary_Category
+ * @package WP_Primary_Terms
  */
 class Test_WP_Primary_Terms extends WP_UnitTestCase {
 
