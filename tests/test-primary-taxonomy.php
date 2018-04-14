@@ -77,8 +77,8 @@ class Test_Primary_Taxonomy extends WP_UnitTestCase {
 	 */
 	public function testCustomPostTypePrimaryTaxonomy() {
 		$post_type = 'custom_post_type';
-		$tax1       = 'new_tax_1';
-		$tax2       = 'new_tax_2';
+		$tax1      = 'new_tax_1';
+		$tax2      = 'new_tax_2';
 
 		register_post_type( $post_type, array( 'taxonomies' => array( 'category', $tax1, $tax2 ) ) );
 
@@ -88,7 +88,12 @@ class Test_Primary_Taxonomy extends WP_UnitTestCase {
 		// Update plugin settings option
 		update_option( WP_Primary_Terms_Settings::OPTION_KEY, array( $tax1, $tax2 ) );
 
-		$post = self::factory()->post->create_and_get( array( 'post_type' => $post_type, 'post_status' => 'auto-draft' ) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_type'   => $post_type,
+				'post_status' => 'auto-draft',
+			)
+		);
 
 		$primary_taxonomy = wppt_get_primary_taxonomies( $post );
 
@@ -103,8 +108,8 @@ class Test_Primary_Taxonomy extends WP_UnitTestCase {
 	 * @return mixed
 	 */
 	public function filter_wppt_get_settings( $settings ) {
-		 array_push( $settings, 'tax1' );
-		 return $settings;
+		array_push( $settings, 'tax1' );
+		return $settings;
 	}
 
 }

@@ -40,7 +40,7 @@ class Test_WP_Primary_Terms extends WP_UnitTestCase {
 		$this->assertSame( WPPT_URL, $path );
 
 		// Plugin Folder Path
-		$path = plugin_dir_path( dirname( __FILE__ )  );
+		$path = plugin_dir_path( dirname( __FILE__ ) );
 		$this->assertSame( WPPT_ABSPATH, $path );
 	}
 
