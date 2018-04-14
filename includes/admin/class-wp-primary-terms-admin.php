@@ -86,7 +86,7 @@ class WP_Primary_Terms_Admin {
             );
 		}
 
-		wp_localize_script( 'wp-primary-category-admin', 'wptPrimaryTaxonomies', $tax_data );
+		wp_localize_script( 'wp-primary-terms-admin-script', 'wptPrimaryTaxonomies', $tax_data );
 	}
 
 	/**

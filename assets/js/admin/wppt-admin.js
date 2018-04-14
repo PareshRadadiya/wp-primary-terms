@@ -5,7 +5,7 @@
  * Licensed under the GPLv2+ license.
  */
 
-;( function( window, document, undefined ) {
+;( function( window, document, $, undefined ) {
 	'use strict';
 
 	let primaryButtonUITemplate;
@@ -34,6 +34,7 @@
 		 */
 		buildCache() {
 			this.categoryDiv = document.getElementById( `taxonomy-${this.taxonomy.name}` );
+			this.$checkList = $( document.getElementById(`${this.taxonomy.name}checklist`) );
 			this.termListItems  = this.categoryDiv.querySelectorAll( `.${this.taxonomy.name}checklist li` );
 			this.primaryInputUITemplate = wp.template( `wpt-primary-${this.taxonomy.name}-input` );
 			this.setPrimaryButtonUI = primaryButtonUITemplate({ isPrimary: false });
@@ -55,6 +56,7 @@
 		bindEvents() {
 			this.clickHandler = this.clickHandler.bind(this);
 			this.categoryDiv.addEventListener( 'click', this.clickHandler );
+			this.$checkList.on( 'wpListAddEnd', this.handleNewTermAdded.bind(this) );
 		}
 
 		/**
@@ -92,6 +94,15 @@
 				e.preventDefault();
 				this.togglePrimaryTermHandler(e)
 			}
+		}
+
+		/**
+		 * Insert "Set/Rest Primary" button on lately added items
+		 * @param e
+		 * @param params
+		 */
+		handleNewTermAdded( e, params ) {
+			e.target.firstElementChild.firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
 		}
 
 		/**
@@ -185,4 +196,4 @@
 		wptPrimaryTaxonomies.map( taxonomy => new WPPrimaryTerms( taxonomy ).init() );
 	};
 
-}( window, document ) );
+}( window, document, jQuery ) );
