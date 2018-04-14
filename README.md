@@ -12,25 +12,15 @@
 
 Allow to designate a primary category for posts and custom post types
 
-## Installation ##
-
 ### Manual Installation ###
 
 1. Upload the entire `/wp-primary-terms` directory to the `/wp-content/plugins/` directory.
 2. Activate WP Primary Terms through the 'Plugins' menu in WordPress.
-
-## Frequently Asked Questions ##
-
-
 ## Screenshots ##
+
 
 
 ## Changelog ##
 
 ### 1.0.0 ###
 * First release
-
-## Upgrade Notice ##
-
-### 1.0.0 ###
-First Release

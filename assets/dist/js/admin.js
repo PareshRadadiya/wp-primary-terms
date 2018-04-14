@@ -1,2 +1,404 @@
-!function(t){function e(i){if(r[i])return r[i].exports;var n=r[i]={i:i,l:!1,exports:{}};return t[i].call(n.exports,n,n.exports,e),n.l=!0,n.exports}var r={};e.m=t,e.c=r,e.d=function(t,r,i){e.o(t,r)||Object.defineProperty(t,r,{configurable:!1,enumerable:!0,get:i})},e.n=function(t){var r=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(r,"a",r),r},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=0)}([function(t,e,r){r(1),t.exports=r(2)},function(t,e){function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}var i=function(){function t(t,e){for(var r=0;r<e.length;r++){var i=e[r];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,i.key,i)}}return function(e,r,i){return r&&t(e.prototype,r),i&&t(e,i),e}}();!function(t,e,n,a){"use strict";var o=void 0,s=function(){function t(e){r(this,t),this.taxonomy=e}return i(t,[{key:"init",value:function(){this.buildCache(),this.render(),this.bindEvents()}},{key:"buildCache",value:function(){this.taxonomyMetaBox=e.getElementById("taxonomy-"+this.taxonomy.name),this.$checkList=n(e.getElementById(this.taxonomy.name+"checklist")),this.termListItems=this.taxonomyMetaBox.querySelectorAll("."+this.taxonomy.name+"checklist li"),this.primaryInputUITemplate=wp.template("wpt-primary-"+this.taxonomy.name+"-input"),this.setPrimaryButtonUI=o({isPrimary:!1}),this.unSetPrimaryButtonUI=o({isPrimary:!0})}},{key:"render",value:function(){this.taxonomyMetaBox.insertAdjacentHTML("beforeend",this.primaryInputUITemplate(this.taxonomy)),this.primaryInput=e.getElementById("_wp_primary_"+this.taxonomy.name),this.buildPrimaryTermsUI()}},{key:"bindEvents",value:function(){this.clickHandler=this.clickHandler.bind(this),this.taxonomyMetaBox.addEventListener("click",this.clickHandler),this.$checkList.on("wpListAddEnd",this.handleNewTermAdded.bind(this))}},{key:"buildPrimaryTermsUI",value:function(){var t=this.getPrimaryTerm(),e=!0,r=!1,i=void 0;try{for(var n,a=this.termListItems[Symbol.iterator]();!(e=(n=a.next()).done);e=!0){var o=n.value;o.querySelector("input[type=checkbox]").value===t?(o.classList.add("primary-term"),o.firstElementChild.insertAdjacentHTML("afterend",this.unSetPrimaryButtonUI)):o.firstElementChild.insertAdjacentHTML("afterend",this.setPrimaryButtonUI)}}catch(t){r=!0,i=t}finally{try{!e&&a.return&&a.return()}finally{if(r)throw i}}}},{key:"clickHandler",value:function(t){t.target&&(t.target.matches("input[type=checkbox]")?this.termCheckHandler(t):t.target.matches("a.toggle-primary-term")&&(t.preventDefault(),this.togglePrimaryTermHandler(t)))}},{key:"handleNewTermAdded",value:function(t){t.target.firstElementChild.firstElementChild.insertAdjacentHTML("afterend",this.setPrimaryButtonUI)}},{key:"termCheckHandler",value:function(t){t.target.parentNode.parentNode.classList.contains("primary-term")&&(this.resetPrimaryTermListItems(),this.setPrimaryTerm())}},{key:"togglePrimaryTermHandler",value:function(t){var e=t.target.closest("li").id.match(/-(\d+)$/)[1],r=this.taxonomyMetaBox.querySelectorAll("#popular-"+this.taxonomy.name+"-"+e+", #"+this.taxonomy.name+"-"+e);r[0].classList.contains("primary-term")?(this.resetPrimaryTermListItems(),this.setPrimaryTerm()):(this.setPrimaryTermListItems(r),this.setPrimaryTerm(e))}},{key:"setPrimaryTermListItems",value:function(t){this.resetPrimaryTermListItems();var e=!0,r=!1,i=void 0;try{for(var n,a=t[Symbol.iterator]();!(e=(n=a.next()).done);e=!0){var o=n.value,s=o.querySelector("span.primary-term-button");o.removeChild(s),o.firstElementChild.insertAdjacentHTML("afterend",this.unSetPrimaryButtonUI),o.classList.add("primary-term")}}catch(t){r=!0,i=t}finally{try{!e&&a.return&&a.return()}finally{if(r)throw i}}}},{key:"resetPrimaryTermListItems",value:function(){var t=this.taxonomyMetaBox.querySelectorAll("li.primary-term"),e=!0,r=!1,i=void 0;try{for(var n,a=t[Symbol.iterator]();!(e=(n=a.next()).done);e=!0){var o=n.value,s=o.querySelector("span.primary-term-button");o.classList.remove("primary-term"),o.removeChild(s),o.firstElementChild.insertAdjacentHTML("afterend",this.setPrimaryButtonUI)}}catch(t){r=!0,i=t}finally{try{!e&&a.return&&a.return()}finally{if(r)throw i}}}},{key:"getPrimaryTerm",value:function(){return this.primaryInput.value}},{key:"setPrimaryTerm",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0;this.primaryInput.value=t,0<t&&(e.getElementById("in-"+this.taxonomy.name+"-"+t).checked=!0)}}]),t}();t.onload=function(){o=wp.template("wpt-primary-term-button"),wp_primary_terms_vars.map(function(t){return new s(t).init()})}}(window,document,jQuery)},function(t,e){}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(1);
+module.exports = __webpack_require__(2);
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * WP Primary Terms
+ * http://pareshradadiya.github.io/wp-primary-terms
+ *
+ * Licensed under the GPLv2+ license.
+ */
+(function (window, document, $, undefined) {
+	'use strict';
+
+	var primaryButtonUITemplate = void 0;
+
+	var WPPrimaryTerms = function () {
+		/**
+   * Constructor
+   * @param taxonomy
+   */
+		function WPPrimaryTerms(taxonomy) {
+			_classCallCheck(this, WPPrimaryTerms);
+
+			this.taxonomy = taxonomy;
+		}
+
+		/**
+   * Initializations
+   */
+
+
+		_createClass(WPPrimaryTerms, [{
+			key: 'init',
+			value: function init() {
+				this.buildCache();
+				this.render();
+				this.bindEvents();
+			}
+
+			/**
+    *  Build cache
+    */
+
+		}, {
+			key: 'buildCache',
+			value: function buildCache() {
+				this.taxonomyMetaBox = document.getElementById('taxonomy-' + this.taxonomy.name);
+				this.$checkList = $(document.getElementById(this.taxonomy.name + 'checklist'));
+				this.termListItems = this.taxonomyMetaBox.querySelectorAll('.' + this.taxonomy.name + 'checklist li');
+				this.primaryInputUITemplate = wp.template('wpt-primary-' + this.taxonomy.name + '-input');
+				this.setPrimaryButtonUI = primaryButtonUITemplate({ isPrimary: false });
+				this.unSetPrimaryButtonUI = primaryButtonUITemplate({ isPrimary: true });
+			}
+
+			/**
+    * Do render
+    */
+
+		}, {
+			key: 'render',
+			value: function render() {
+				this.taxonomyMetaBox.insertAdjacentHTML('beforeend', this.primaryInputUITemplate(this.taxonomy));
+				this.primaryInput = document.getElementById('_wp_primary_' + this.taxonomy.name);
+				this.buildPrimaryTermsUI();
+			}
+
+			/**
+    * Event listeners
+    */
+
+		}, {
+			key: 'bindEvents',
+			value: function bindEvents() {
+				this.clickHandler = this.clickHandler.bind(this);
+				this.taxonomyMetaBox.addEventListener('click', this.clickHandler);
+				this.$checkList.on('wpListAddEnd', this.handleNewTermAdded.bind(this));
+			}
+
+			/**
+    * Add Set/Reset button in all category list items
+    */
+
+		}, {
+			key: 'buildPrimaryTermsUI',
+			value: function buildPrimaryTermsUI() {
+				var primaryTermID = this.getPrimaryTerm();
+
+				var _iteratorNormalCompletion = true;
+				var _didIteratorError = false;
+				var _iteratorError = undefined;
+
+				try {
+					for (var _iterator = this.termListItems[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+						var termListItem = _step.value;
+
+						var catCheckBox = termListItem.querySelector('input[type=checkbox]');
+
+						// If current list item has primary term, add "Rest Primary" button
+						if (catCheckBox.value === primaryTermID) {
+							termListItem.classList.add('primary-term');
+							termListItem.firstElementChild.insertAdjacentHTML('afterend', this.unSetPrimaryButtonUI);
+						} else {
+							// Otherwise, add "Set Primary" button
+							termListItem.firstElementChild.insertAdjacentHTML('afterend', this.setPrimaryButtonUI);
+						}
+					}
+				} catch (err) {
+					_didIteratorError = true;
+					_iteratorError = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion && _iterator.return) {
+							_iterator.return();
+						}
+					} finally {
+						if (_didIteratorError) {
+							throw _iteratorError;
+						}
+					}
+				}
+			}
+
+			/**
+    * Click event handler
+    * @param  {Event} e The Click event
+    */
+
+		}, {
+			key: 'clickHandler',
+			value: function clickHandler(e) {
+				// Only run if the target is in a taxonomy meta div
+				if (!e.target) {
+					return;
+				}
+
+				if (e.target.matches('input[type=checkbox]')) {
+					this.termCheckHandler(e);
+				} else if (e.target.matches('a.toggle-primary-term')) {
+					e.preventDefault();
+					this.togglePrimaryTermHandler(e);
+				}
+			}
+
+			/**
+    * Insert "Set/Rest Primary" button on lately added items
+    * @param e
+    * @param params
+    */
+
+		}, {
+			key: 'handleNewTermAdded',
+			value: function handleNewTermAdded(e) {
+				e.target.firstElementChild.firstElementChild.insertAdjacentHTML('afterend', this.setPrimaryButtonUI);
+			}
+
+			/**
+    * Term checked event handler
+    * @param  {Event} e The Check event
+    */
+
+		}, {
+			key: 'termCheckHandler',
+			value: function termCheckHandler(e) {
+				if (e.target.parentNode.parentNode.classList.contains('primary-term')) {
+					this.resetPrimaryTermListItems();
+					this.setPrimaryTerm();
+				}
+			}
+
+			/**
+    * Set/Reset Primary button click handler
+    * @param  {Event} e The Click event
+    */
+
+		}, {
+			key: 'togglePrimaryTermHandler',
+			value: function togglePrimaryTermHandler(e) {
+				var termID = e.target.closest('li').id.match(/-(\d+)$/)[1],
+				    // Fetch a term id from the li ID attribute
+				listItems = this.taxonomyMetaBox.querySelectorAll('#popular-' + this.taxonomy.name + '-' + termID + ', #' + this.taxonomy.name + '-' + termID);
+
+				// Set primary term
+				if (!listItems[0].classList.contains('primary-term')) {
+					this.setPrimaryTermListItems(listItems);
+					// Store term id into hidden input
+					this.setPrimaryTerm(termID);
+				} else {
+					// Reset primary term
+					this.resetPrimaryTermListItems();
+					this.setPrimaryTerm();
+				}
+			}
+
+			/**
+    * Set primary term list items
+    * @param termListItems
+    */
+
+		}, {
+			key: 'setPrimaryTermListItems',
+			value: function setPrimaryTermListItems(termListItems) {
+				// Reset a previously set primary term, if any.
+				this.resetPrimaryTermListItems();
+
+				var _iteratorNormalCompletion2 = true;
+				var _didIteratorError2 = false;
+				var _iteratorError2 = undefined;
+
+				try {
+					for (var _iterator2 = termListItems[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+						var termListItem = _step2.value;
+
+						var primaryButtonWrap = termListItem.querySelector('span.primary-term-button');
+						termListItem.removeChild(primaryButtonWrap); // Remove "Set Primary" button wrap
+						// Insert "Reset Primary" button
+						termListItem.firstElementChild.insertAdjacentHTML('afterend', this.unSetPrimaryButtonUI);
+						termListItem.classList.add('primary-term'); // Add 'primary-term' class to list item
+					}
+				} catch (err) {
+					_didIteratorError2 = true;
+					_iteratorError2 = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion2 && _iterator2.return) {
+							_iterator2.return();
+						}
+					} finally {
+						if (_didIteratorError2) {
+							throw _iteratorError2;
+						}
+					}
+				}
+			}
+
+			/**
+    * Reset primary term list terms
+    */
+
+		}, {
+			key: 'resetPrimaryTermListItems',
+			value: function resetPrimaryTermListItems() {
+				var primaryTermListItems = this.taxonomyMetaBox.querySelectorAll('li.primary-term');
+
+				var _iteratorNormalCompletion3 = true;
+				var _didIteratorError3 = false;
+				var _iteratorError3 = undefined;
+
+				try {
+					for (var _iterator3 = primaryTermListItems[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+						var primaryTermListItem = _step3.value;
+
+						var primaryButtonWrap = primaryTermListItem.querySelector('span.primary-term-button');
+
+						primaryTermListItem.classList.remove('primary-term'); // Remove primary-term class from LI
+						primaryTermListItem.removeChild(primaryButtonWrap); // Delete "Reset Primary" button wrap
+						primaryTermListItem.firstElementChild.insertAdjacentHTML('afterend', this.setPrimaryButtonUI);
+					}
+				} catch (err) {
+					_didIteratorError3 = true;
+					_iteratorError3 = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion3 && _iterator3.return) {
+							_iterator3.return();
+						}
+					} finally {
+						if (_didIteratorError3) {
+							throw _iteratorError3;
+						}
+					}
+				}
+			}
+
+			/**
+    * Return the primary term id
+    */
+
+		}, {
+			key: 'getPrimaryTerm',
+			value: function getPrimaryTerm() {
+				return this.primaryInput.value;
+			}
+
+			/**
+    * Set a primary term id into hidden input
+    * @param termID
+    */
+
+		}, {
+			key: 'setPrimaryTerm',
+			value: function setPrimaryTerm() {
+				var termID = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+				this.primaryInput.value = termID;
+				if (0 < termID) {
+					// Check "All Categories" item
+					document.getElementById('in-' + this.taxonomy.name + '-' + termID).checked = true;
+					// Check Most used item
+					var popularTermckBox = document.getElementById('in-popular-' + this.taxonomy.name + '-' + termID);
+					if (popularTermckBox) {
+						popularTermckBox.checked = true;
+					}
+				}
+			}
+		}]);
+
+		return WPPrimaryTerms;
+	}();
+
+	window.onload = function () {
+		primaryButtonUITemplate = wp.template('wpt-primary-term-button');
+		// Loop through each taxonomy and init WPPrimaryTerms class
+		wp_primary_terms_vars.map(function (taxonomy) {
+			return new WPPrimaryTerms(taxonomy).init();
+		});
+	};
+})(window, document, jQuery);
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ })
+/******/ ]);
 //# sourceMappingURL=admin.js.map

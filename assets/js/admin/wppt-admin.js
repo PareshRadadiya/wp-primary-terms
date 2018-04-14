@@ -182,7 +182,13 @@
 		setPrimaryTerm( termID = 0 ) {
 			this.primaryInput.value = termID;
 			if ( 0 < termID ) {
+				// Check "All Categories" item
 				document.getElementById( `in-${ this.taxonomy.name }-${ termID }` ).checked = true;
+				// Check Most used item
+				const popularTermckBox = document.getElementById( `in-popular-${ this.taxonomy.name }-${ termID }` );
+				if ( popularTermckBox ) {
+					popularTermckBox.checked = true;
+				}
 			}
 		}
 	}
