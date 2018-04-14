@@ -85,14 +85,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  *
  * Licensed under the GPLv2+ license.
  */
-
-;(function (window, document, $, undefined) {
+(function (window, document, $, undefined) {
 	'use strict';
 
 	var primaryButtonUITemplate = void 0;
 
 	var WPPrimaryTerms = function () {
-
 		/**
    * Constructor
    * @param taxonomy
@@ -207,9 +205,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}, {
 			key: 'clickHandler',
 			value: function clickHandler(e) {
-
 				// Only run if the target is in a category div
-				if (!e.target) return;
+				if (!e.target) {
+					return;
+				}
 
 				if (e.target.matches('input[type=checkbox]')) {
 					this.termCheckHandler(e);
@@ -227,7 +226,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 		}, {
 			key: 'handleNewTermAdded',
-			value: function handleNewTermAdded(e, params) {
+			value: function handleNewTermAdded(e) {
 				e.target.firstElementChild.firstElementChild.insertAdjacentHTML('afterend', this.setPrimaryButtonUI);
 			}
 
@@ -253,7 +252,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}, {
 			key: 'togglePrimaryTermHandler',
 			value: function togglePrimaryTermHandler(e) {
-
 				var termID = e.target.closest('li').id.match(/-(\d+)$/)[1],
 				    // Fetch a term id from the li ID attribute
 				listItems = this.categoryDiv.querySelectorAll('#popular-' + this.taxonomy.name + '-' + termID + ', #' + this.taxonomy.name + '-' + termID);
@@ -383,7 +381,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	window.onload = function () {
 		primaryButtonUITemplate = wp.template('wpt-primary-term-button');
 		// Loop through each taxonomy and init WPPrimaryTerms class
-		wptPrimaryTaxonomies.map(function (taxonomy) {
+		wp_primary_terms_vars.map(function (taxonomy) {
 			return new WPPrimaryTerms(taxonomy).init();
 		});
 	};
