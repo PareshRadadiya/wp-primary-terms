@@ -33,7 +33,7 @@
 		buildCache() {
 			this.taxonomyMetaBox = document.getElementById( `taxonomy-${ this.taxonomy.name }` );
 			this.$checkList = $( document.getElementById( `${ this.taxonomy.name }checklist` ) );
-			this.termListItems = this.taxonomyMetaBox.querySelectorAll( `.${ this.taxonomy.name }checklist li` );
+			this.termListItems = this.taxonomyMetaBox.querySelectorAll( '.categorychecklist li' );
 			this.primaryInputUITemplate = wp.template( `wpt-primary-${ this.taxonomy.name }-input` );
 			this.setPrimaryButtonUI = primaryButtonUITemplate( { isPrimary: false } );
 			this.unSetPrimaryButtonUI = primaryButtonUITemplate( { isPrimary: true } );
