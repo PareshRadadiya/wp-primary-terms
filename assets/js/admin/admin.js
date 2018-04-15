@@ -7,7 +7,7 @@
 ( function( window, document, $ ) {
 	'use strict';
 
-	let primaryButtonUITemplate;
+	let setPrimaryButtonTamplate, reSetPrimaryButtonTamplate;
 
 	class WPPrimaryTerms {
 		/**
@@ -35,8 +35,6 @@
 			this.$checkList = $( document.getElementById( `${ this.taxonomy.name }checklist` ) );
 			this.termListItems = this.taxonomyMetaBox.querySelectorAll( '.categorychecklist li' );
 			this.primaryInputUITemplate = wp.template( `wp-primary-${ this.taxonomy.name }-input` );
-			this.setPrimaryButtonUI = primaryButtonUITemplate( { isPrimary: false } );
-			this.unSetPrimaryButtonUI = primaryButtonUITemplate( { isPrimary: true } );
 		}
 
 		/**
@@ -69,10 +67,10 @@
 				// If current list item has primary term, add "Rest Primary" button
 				if ( catCheckBox.value === primaryTermID ) {
 					termListItem.classList.add( 'primary-term' );
-					termListItem.firstElementChild.insertAdjacentHTML( 'afterend', this.unSetPrimaryButtonUI );
+					termListItem.firstElementChild.insertAdjacentHTML( 'afterend', reSetPrimaryButtonTamplate );
 				} else {
 					// Otherwise, add "Set Primary" button
-					termListItem.firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
+					termListItem.firstElementChild.insertAdjacentHTML( 'afterend', setPrimaryButtonTamplate );
 				}
 			}
 		}
@@ -101,7 +99,7 @@
 		 * @param params
 		 */
 		handleNewTermAdded( e ) {
-			e.target.firstElementChild.firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
+			e.target.firstElementChild.firstElementChild.insertAdjacentHTML( 'afterend', setPrimaryButtonTamplate );
 		}
 
 		/**
@@ -148,7 +146,7 @@
 				const primaryButtonWrap = termListItem.querySelector( 'span.primary-term-button' );
 				termListItem.removeChild( primaryButtonWrap ); // Remove "Set Primary" button wrap
 				// Insert "Reset Primary" button
-				termListItem.firstElementChild.insertAdjacentHTML( 'afterend', this.unSetPrimaryButtonUI );
+				termListItem.firstElementChild.insertAdjacentHTML( 'afterend', reSetPrimaryButtonTamplate );
 				termListItem.classList.add( 'primary-term' ); // Add 'primary-term' class to list item
 			}
 		}
@@ -164,7 +162,7 @@
 
 				primaryTermListItem.classList.remove( 'primary-term' ); // Remove primary-term class from LI
 				primaryTermListItem.removeChild( primaryButtonWrap ); // Delete "Reset Primary" button wrap
-				primaryTermListItem.firstElementChild.insertAdjacentHTML( 'afterend', this.setPrimaryButtonUI );
+				primaryTermListItem.firstElementChild.insertAdjacentHTML( 'afterend', setPrimaryButtonTamplate );
 			}
 		}
 
@@ -194,7 +192,9 @@
 	}
 
 	window.onload = function() {
-		primaryButtonUITemplate = wp.template( 'wp-primary-term-button' );
+		const primaryButtonUITemplate = wp.template( 'wp-primary-term-button' );
+		setPrimaryButtonTamplate = primaryButtonUITemplate( { isPrimary: false } );
+		reSetPrimaryButtonTamplate = primaryButtonUITemplate( { isPrimary: true } );
 		// Loop through each taxonomy and init WPPrimaryTerms class
 		wpPrimaryTermsVars.map( taxonomy => new WPPrimaryTerms( taxonomy ).init() );
 	};
