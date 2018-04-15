@@ -204,6 +204,8 @@ class WP_Primary_Terms_Admin {
 
 		if ( $term_id ) {
 			update_post_meta( $post_id, $meta_key, $term_id );
+		} else {
+			delete_post_meta( $post_id, $meta_key );
 		}
 	}
 
