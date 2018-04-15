@@ -108,7 +108,7 @@ class WP_Primary_Terms_Admin {
 	 */
 	public function save_primary_terms( $post_id, $post ) {
 
-		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || isset( $_REQUEST['bulk_edit'] ) ) {
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 			return;
 		}
 
@@ -176,9 +176,7 @@ class WP_Primary_Terms_Admin {
 	public function save_primary_term( $post_id, $taxonomy ) {
 		$meta_key = self::KEY_PREFIX . $taxonomy;
 
-		$nonce_value = isset( $_POST[ 'wppt_primary_' . $taxonomy . '_nonce' ] ) ? $_POST[ 'wppt_primary_' . $taxonomy . '_nonce' ] : '';
-
-		if ( empty( $nonce_value ) || ! wp_verify_nonce( $nonce_value, 'wppt-save-primary-' . $taxonomy ) ) {
+		if ( ! isset( $_POST[ 'wppt_primary_' . $taxonomy . '_nonce' ] ) || ! wp_verify_nonce( $_POST[ 'wppt_primary_' . $taxonomy . '_nonce' ], 'wppt-save-primary-' . $taxonomy ) ) {
 			return;
 		}
 
@@ -202,5 +200,4 @@ class WP_Primary_Terms_Admin {
 		}
 		return $taxonomies;
 	}
-
 }

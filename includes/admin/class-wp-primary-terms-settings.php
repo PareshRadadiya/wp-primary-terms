@@ -104,9 +104,7 @@ class WP_Primary_Terms_Settings {
 	 * @return array $input Sanitized value
 	 */
 	public function settings_sanitize( $input = array() ) {
-		if ( isset( $_POST['_wp_http_referer'] ) ) {
-			add_settings_error( self::NOTICE_KEY, '', __( 'Settings updated.', 'wp-primary-terms' ), 'updated' );
-		}
+		add_settings_error( self::NOTICE_KEY, '', __( 'Settings updated.', 'wp-primary-terms' ), 'updated' );
 		return $input;
 	}
 
@@ -127,14 +125,14 @@ class WP_Primary_Terms_Settings {
 
 		<?php foreach ( $taxonomies as $taxonomy ) : ?>
 			<?php $tax_name = $taxonomy->name; ?>
-			<p class="taxonomy-<?php $tax_name; ?>">
-				<input type="checkbox" name="wp_primary_terms_settings[]" id="<?php echo $tax_name; ?>" value="<?php echo $tax_name; ?>" <?php checked( in_array( $tax_name, $settings ) ); ?>>
-				<label for="<?php echo $tax_name; ?>"><?php echo $taxonomy->label; ?></label>
+			<p class="taxonomy-<?php esc_attr_e( $tax_name ); ?>">
+				<input type="checkbox" name="wp_primary_terms_settings[]" id="<?php esc_attr_e( $tax_name ); ?>" value="<?php esc_attr_e( $tax_name ); ?>" <?php checked( in_array( $tax_name, $settings, true ) ); ?>>
+				<label for="<?php esc_attr_e( $tax_name ); ?>"><?php esc_html_e( $taxonomy->label ); ?></label>
 			</p>
 		<?php endforeach; ?>
 
 		<p class="description">
-			<?php esc_html_e( 'Toggle primary term support for the taxonomies.', 'wporg' ); ?>
+			<?php esc_html_e( 'Toggle primary term support for the taxonomies.', 'wp-primary-terms' ); ?>
 		</p>
 		<?php
 	}

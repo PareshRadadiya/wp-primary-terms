@@ -14,10 +14,6 @@ class Test_WP_Primary_Terms extends WP_UnitTestCase {
 		$this->object = wppt()::get_instance();
 	}
 
-	public function tearDown() {
-		parent::tearDown();
-	}
-
 	/**
 	 * Test if our class exists.
 	 *

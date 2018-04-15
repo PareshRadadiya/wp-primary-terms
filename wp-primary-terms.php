@@ -41,95 +41,14 @@
 // Include additional php files here.
 // require 'includes/something.php';
 
-/**
- * Main initiation class.
- *
- * @since  1.0.0
- */
-final class WP_Primary_Terms {
+// Useful global constants
+define( 'WPPT_ABSPATH', plugin_dir_path( __FILE__ ) );
+define( 'WPPT_BASENAME', plugin_basename( __FILE__ ) );
+define( 'WPPT_URL', plugin_dir_url( __FILE__ ) );
+define( 'WPPT_VERSION', '1.0.0' );
 
-	/**
-	 * Instance of this class.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      object   $instance   A single instance of this class.
-	 */
-	private static $instance = null;
-
-	/**
-	 * Current version.
-	 *
-	 * @var    string
-	 * @since  1.0.0
-	 */
-	const VERSION = '1.0.0';
-
-	/**
-	 * Creates or returns an instance of this class.
-	 *
-	 * @since   1.0.0
-	 * @return  WP_Primary_Terms instance of this class.
-	 */
-	public static function get_instance() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
-			self::$instance->setup();
-		}
-		return self::$instance;
-	}
-
-	/**
-	 * Sets up our plugin.
-	 *
-	 * @since  1.0.0
-	 */
-	public function setup() {
-		$this->define_constants();
-		$this->includes();
-	}
-
-	/**
-	 * Define plugin constants.
-	 */
-	public function define_constants() {
-		define( 'WPPT_ABSPATH', plugin_dir_path( __FILE__ ) );
-		define( 'WPPT_BASENAME', plugin_basename( __FILE__ ) );
-		define( 'WPPT_URL', plugin_dir_url( __FILE__ ) );
-		define( 'WPPT_VERSION', self::VERSION );
-	}
-
-	/**
-	 * Include required core files used in admin.
-	 */
-	public function includes() {
-		include_once WPPT_ABSPATH . 'includes/functions.php';
-		include_once WPPT_ABSPATH . 'includes/admin/class-wp-primary-terms-settings.php';
-		include_once WPPT_ABSPATH . 'includes/admin/class-wp-primary-terms-admin.php';
-	}
-
-	/**
-	 * Init plugin when WordPress Initialises.
-	 *
-	 * @since  1.0.
-	 */
-	public function init() {
-
-		// Before init action.
-		do_action( 'before_wp_primary_terms_init' );
-
-		// Load translated strings for plugin.
-		load_plugin_textdomain( 'wp-primary-terms', false, WPPT_BASENAME . '/languages/' );
-
-		// Initialize plugin classes.
-		WP_Primary_Terms_Admin::get_instance();
-		WP_Primary_Terms_Settings::get_instance();
-
-		// After init action.
-		do_action( 'after_wp_primary_terms_init' );
-	}
-
-}
+// Include files
+require_once WPPT_ABSPATH . 'includes/class-wp-primary-terms.php';
 
 /**
  * Grab the WP_Primary_Terms object and return it.
