@@ -9,13 +9,13 @@ const wpPot = require( 'wp-pot' );
 // Webpack config.
 const config = {
 	entry: {
-		admin: [ './assets/js/admin/wppt-admin.js', './assets/css/admin/wppt-admin.scss' ],
+		admin: [ './assets/js/admin/admin.js', './assets/css/admin/admin.scss' ],
 	},
 
 	// Tell webpack where to output.
 	output: {
 		path: path.resolve( __dirname, './assets/dist/' ),
-		filename: 'js/[name].js'
+		filename: 'js/[name].min.js'
 	},
 
 	devtool: 'source-map',

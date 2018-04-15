@@ -34,7 +34,7 @@
 			this.taxonomyMetaBox = document.getElementById( `taxonomy-${ this.taxonomy.name }` );
 			this.$checkList = $( document.getElementById( `${ this.taxonomy.name }checklist` ) );
 			this.termListItems = this.taxonomyMetaBox.querySelectorAll( '.categorychecklist li' );
-			this.primaryInputUITemplate = wp.template( `wpt-primary-${ this.taxonomy.name }-input` );
+			this.primaryInputUITemplate = wp.template( `wp-primary-${ this.taxonomy.name }-input` );
 			this.setPrimaryButtonUI = primaryButtonUITemplate( { isPrimary: false } );
 			this.unSetPrimaryButtonUI = primaryButtonUITemplate( { isPrimary: true } );
 		}
@@ -194,7 +194,7 @@
 	}
 
 	window.onload = function() {
-		primaryButtonUITemplate = wp.template( 'wpt-primary-term-button' );
+		primaryButtonUITemplate = wp.template( 'wp-primary-term-button' );
 		// Loop through each taxonomy and init WPPrimaryTerms class
 		wp_primary_terms_vars.map( taxonomy => new WPPrimaryTerms( taxonomy ).init() );
 	};

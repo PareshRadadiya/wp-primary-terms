@@ -5,7 +5,10 @@
  * @since   1.0.0
  * @package WP_Primary_Terms
  */
-class Test_WP_Primary_Terms_Admin extends WP_UnitTestCase {
+namespace TenUp\WpPrimaryTerms;
+use \TenUp\WpPrimaryTerms\Admin;
+
+class Test_WP_Primary_Terms_Admin extends \WP_UnitTestCase {
 
 	/**
 	 * @var WP_Primary_Terms_Admin
@@ -21,7 +24,7 @@ class Test_WP_Primary_Terms_Admin extends WP_UnitTestCase {
 	 */
 	public static function setUpBeforeClass() {
 		parent::setUpBeforeClass();
-		self::$class_instance = WP_Primary_Terms_Admin::get_instance();
+		self::$class_instance = Admin\WP_Primary_Terms_Admin::get_instance();
 	}
 
 	/**

@@ -6,6 +6,7 @@
  * @package  WP_Primary_Terms/Admin
  * @version  1.0.0
  */
+namespace TenUp\WpPrimaryTerms\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -73,8 +74,20 @@ class WP_Primary_Terms_Admin {
 		$rtl = is_rtl() ? '.rtl' : '';
 
 		// Enqueue admin scripts and styles
-		wp_enqueue_script( 'wp-primary-terms-admin-script', WPPT_URL . 'assets/dist/js/admin.js', array(), WPPT_VERSION );
-		wp_enqueue_style( 'wp-primary-terms-admin-style', WPPT_URL . 'assets/dist/css/admin' . $rtl . '.css', array(), WPPT_VERSION );
+		wp_enqueue_script(
+			'wp-primary-terms-admin-script',
+			WP_PRIMARY_TERMS_URL . 'assets/dist/js/admin.min.js',
+			array(),
+			WP_PRIMARY_TERMS_VERSION,
+			true
+		);
+
+		wp_enqueue_style(
+			'wp-primary-terms-admin-style',
+			WP_PRIMARY_TERMS_URL . 'assets/dist/css/admin' . $rtl . '.css',
+			array(),
+			WP_PRIMARY_TERMS_VERSION
+		);
 
 		$tax_data = array();
 
@@ -135,10 +148,12 @@ class WP_Primary_Terms_Admin {
 	 */
 	public function print_toggle_primary_term_button_template() {
 		?>
-		<script type="text/html" id="tmpl-wpt-primary-term-button">
+		<script type="text/html" id="tmpl-wp-primary-term-button">
 			<span class="primary-term-button">
-				<a class="toggle-primary-term">{{ data.isPrimary ? '<?php esc_html_e( 'Reset Primary', 'wp-primary-terms' ); ?>
-					' : '<?php esc_html_e( 'Set Primary', 'wp-primary-terms' ); ?>' }}</a>
+				<a class="toggle-primary-term">
+					{{ data.isPrimary ? '<?php esc_html_e( 'Reset Primary', 'wp-primary-terms' ); ?>
+					' : '<?php esc_html_e( 'Set Primary', 'wp-primary-terms' ); ?>' }}
+				</a>
 				<# if ( data.isPrimary ) { #>
 					<label><?php esc_html_e( 'Primary', 'wp-primary-terms' ); ?></label>
 				<# } #>
@@ -158,9 +173,14 @@ class WP_Primary_Terms_Admin {
 
 		foreach ( $taxonomies as $taxonomy ) {
 			?>
-			<script type="text/html" id="tmpl-wpt-primary-<?php echo esc_attr( $taxonomy ); ?>-input">
-				<input type="hidden" id="<?php echo esc_attr( self::KEY_PREFIX . $taxonomy ); ?>" name="<?php echo esc_attr( self::KEY_PREFIX . $taxonomy ); ?>" value="{{data.termID}}"/>
-				<?php wp_nonce_field( 'wppt-save-primary-' . $taxonomy, 'wppt_primary_' . $taxonomy . '_nonce' ); ?>
+			<script type="text/html" id="tmpl-wp-primary-<?php echo esc_attr( $taxonomy ); ?>-input">
+				<input
+					type="hidden"
+					id="<?php echo esc_attr( self::KEY_PREFIX . $taxonomy ); ?>"
+					name="<?php echo esc_attr( self::KEY_PREFIX . $taxonomy ); ?>"
+					value="{{data.termID}}"
+				/>
+				<?php wp_nonce_field( 'wp-save-primary-' . $taxonomy, 'wp_primary_' . $taxonomy . '_nonce' ); ?>
 			</script>
 			<?php
 		}
@@ -176,7 +196,7 @@ class WP_Primary_Terms_Admin {
 	public function save_primary_term( $post_id, $taxonomy ) {
 		$meta_key = self::KEY_PREFIX . $taxonomy;
 
-		if ( ! isset( $_POST[ 'wppt_primary_' . $taxonomy . '_nonce' ] ) || ! wp_verify_nonce( $_POST[ 'wppt_primary_' . $taxonomy . '_nonce' ], 'wppt-save-primary-' . $taxonomy ) ) {
+		if ( ! isset( $_POST[ 'wp_primary_' . $taxonomy . '_nonce' ] ) || ! wp_verify_nonce( $_POST[ 'wp_primary_' . $taxonomy . '_nonce' ], 'wp-save-primary-' . $taxonomy ) ) {
 			return;
 		}
 
@@ -196,7 +216,7 @@ class WP_Primary_Terms_Admin {
 	public static function get_primary_taxonomies() {
 		static $taxonomies = false;
 		if ( false === $taxonomies ) {
-			$taxonomies = wppt_get_primary_taxonomies();
+			$taxonomies = \TenUp\WpPrimaryTerms\Functions\get_primary_taxonomies();
 		}
 		return $taxonomies;
 	}

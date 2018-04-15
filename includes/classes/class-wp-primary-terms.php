@@ -6,6 +6,8 @@
  * @package  WP_Primary_Terms
  * @version  1.0.0
  */
+namespace TenUp\WpPrimaryTerms\Core;
+use TenUp\WpPrimaryTerms\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -52,15 +54,15 @@ final class WP_Primary_Terms {
 	 * Include required core files used in admin.
 	 */
 	public function includes() {
-		include_once WPPT_ABSPATH . 'includes/functions.php';
-		include_once WPPT_ABSPATH . 'includes/admin/class-wp-primary-terms-settings.php';
-		include_once WPPT_ABSPATH . 'includes/admin/class-wp-primary-terms-admin.php';
+		include_once WP_PRIMARY_TERMS_INC . 'functions/functions.php';
+		include_once WP_PRIMARY_TERMS_INC . 'classes/admin/class-wp-primary-terms-settings.php';
+		include_once WP_PRIMARY_TERMS_INC . 'classes/admin/class-wp-primary-terms-admin.php';
 	}
 
 	/**
 	 * Init plugin when WordPress Initialises.
 	 *
-	 * @since  1.0.
+	 * @since  1.0.0
 	 */
 	public function init() {
 
@@ -68,11 +70,13 @@ final class WP_Primary_Terms {
 		do_action( 'before_wp_primary_terms_init' );
 
 		// Load translated strings for plugin.
-		load_plugin_textdomain( 'wp-primary-terms', false, WPPT_BASENAME . '/languages/' );
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'wp-primary-terms' );
+		load_textdomain( 'wp-primary-terms', WP_LANG_DIR . '/wp-primary-terms/wp-primary-terms-' . $locale . '.mo' );
+		load_plugin_textdomain( 'wp-primary-terms', false, plugin_basename( WP_PRIMARY_TERMS_PATH ) . '/languages/' );
 
 		// Initialize plugin classes.
-		WP_Primary_Terms_Admin::get_instance();
-		WP_Primary_Terms_Settings::get_instance();
+		Admin\WP_Primary_Terms_Admin::get_instance();
+		Admin\WP_Primary_Terms_Settings::get_instance();
 
 		// After init action.
 		do_action( 'after_wp_primary_terms_init' );

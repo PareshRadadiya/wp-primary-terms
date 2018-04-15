@@ -19,36 +19,14 @@
  * Built using generator-plugin-wp (https://github.com/WebDevStudios/generator-plugin-wp)
  */
 
-/**
- * Copyright (c) 2018 Paresh (email : pareshpravin@gmail.com)
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License, version 2 or, at
- * your discretion, any later version, as published by the Free
- * Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- */
-
-
-// Include additional php files here.
-// require 'includes/something.php';
-
 // Useful global constants
-define( 'WPPT_ABSPATH', plugin_dir_path( __FILE__ ) );
-define( 'WPPT_BASENAME', plugin_basename( __FILE__ ) );
-define( 'WPPT_URL', plugin_dir_url( __FILE__ ) );
-define( 'WPPT_VERSION', '1.0.0' );
+define( 'WP_PRIMARY_TERMS_VERSION', '1.0.0' );
+define( 'WP_PRIMARY_TERMS_URL',     plugin_dir_url( __FILE__ ) );
+define( 'WP_PRIMARY_TERMS_PATH',    dirname( __FILE__ ) . '/' );
+define( 'WP_PRIMARY_TERMS_INC',     WP_PRIMARY_TERMS_PATH . 'includes/' );
 
 // Include files
-require_once WPPT_ABSPATH . 'includes/class-wp-primary-terms.php';
+require_once WP_PRIMARY_TERMS_INC . '/classes/class-wp-primary-terms.php';
 
 /**
  * Grab the WP_Primary_Terms object and return it.
@@ -57,9 +35,9 @@ require_once WPPT_ABSPATH . 'includes/class-wp-primary-terms.php';
  * @since  1.0.0
  * @return WP_Primary_Terms instance of plugin class.
  */
-function wppt() {
-	return WP_Primary_Terms::get_instance();
+function wp_primary_terms() {
+	return \TenUp\WpPrimaryTerms\Core\WP_Primary_Terms::get_instance();
 }
 
 // Kick it off.
-add_action( 'plugins_loaded', array( wppt(), 'init' ) );
+add_action( 'plugins_loaded', array( wp_primary_terms(), 'init' ) );

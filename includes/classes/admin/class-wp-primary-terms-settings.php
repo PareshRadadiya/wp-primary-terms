@@ -6,6 +6,7 @@
  * @package     WP_Primary_Terms/Admin
  * @version     1.0.0
  */
+namespace TenUp\WpPrimaryTerms\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -62,6 +63,7 @@ class WP_Primary_Terms_Settings {
 		// Hook in our actions to the admin.
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this, 'add_options_page' ) );
+
 		// Set our title.
 		$this->title = esc_attr__( 'WP Primary Terms Settings', 'wp-primary-terms' );
 	}
@@ -118,7 +120,10 @@ class WP_Primary_Terms_Settings {
 	 * @return void
 	 */
 	public function taxonomies_checkbox_callback( $args ) {
-		$taxonomies = get_taxonomies( array( 'hierarchical' => true ), 'objects' );
+		$taxonomies = get_taxonomies(
+			array( 'hierarchical' => true ),
+			'objects'
+		);
 
 		// All saved settings
 		$settings = $this->get_settings(); ?>
@@ -126,7 +131,11 @@ class WP_Primary_Terms_Settings {
 		<?php foreach ( $taxonomies as $taxonomy ) : ?>
 			<?php $tax_name = $taxonomy->name; ?>
 			<p class="taxonomy-<?php esc_attr_e( $tax_name ); ?>">
-				<input type="checkbox" name="wp_primary_terms_settings[]" id="<?php esc_attr_e( $tax_name ); ?>" value="<?php esc_attr_e( $tax_name ); ?>" <?php checked( in_array( $tax_name, $settings, true ) ); ?>>
+				<input
+					type="checkbox" name="wp_primary_terms_settings[]"
+					id="<?php esc_attr_e( $tax_name ); ?>"
+					value="<?php esc_attr_e( $tax_name ); ?>" <?php checked( in_array( $tax_name, $settings, true ) ); ?>
+				/>
 				<label for="<?php esc_attr_e( $tax_name ); ?>"><?php esc_html_e( $taxonomy->label ); ?></label>
 			</p>
 		<?php endforeach; ?>

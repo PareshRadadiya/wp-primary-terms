@@ -3,7 +3,11 @@
  * Class Test_Primary_Taxonomy
  *
  */
-class Test_Primary_Taxonomy extends WP_UnitTestCase {
+namespace TenUp\WpPrimaryTerms;
+use \TenUp\WpPrimaryTerms\Functions;
+use \TenUp\WpPrimaryTerms\Admin;
+
+class Test_Functions extends \WP_UnitTestCase {
 
 	protected static $post;
 	protected static $tax_key = 'wptests_tax';
@@ -22,7 +26,7 @@ class Test_Primary_Taxonomy extends WP_UnitTestCase {
 	 */
 	public function testDefaultCategoryPrimaryTaxonomyEnabled() {
 
-		$primary_taxonomy = wppt_get_primary_taxonomies( self::$post );
+		$primary_taxonomy = Functions\get_primary_taxonomies( self::$post );
 		$this->assertContains( 'category', $primary_taxonomy );
 	}
 
@@ -32,9 +36,9 @@ class Test_Primary_Taxonomy extends WP_UnitTestCase {
 	public function testOnlyCustomPrimaryTaxonomyEnabled() {
 
 		// Update plugin settings option
-		update_option( WP_Primary_Terms_Settings::OPTION_KEY, array( self::$tax_key ) );
+		update_option( Admin\WP_Primary_Terms_Settings::OPTION_KEY, array( self::$tax_key ) );
 
-		$primary_taxonomy = wppt_get_primary_taxonomies( self::$post );
+		$primary_taxonomy = Functions\get_primary_taxonomies( self::$post );
 
 		$this->assertContains( self::$tax_key, $primary_taxonomy );
 
@@ -47,9 +51,9 @@ class Test_Primary_Taxonomy extends WP_UnitTestCase {
 	public function testZeroPrimaryTaxonomyEnabled() {
 
 		// Update plugin settings option
-		update_option( WP_Primary_Terms_Settings::OPTION_KEY, array() );
+		update_option( Admin\WP_Primary_Terms_Settings::OPTION_KEY, array() );
 
-		$primary_taxonomy = wppt_get_primary_taxonomies( self::$post );
+		$primary_taxonomy = Functions\get_primary_taxonomies( self::$post );
 
 		$this->assertNotContains( self::$tax_key, $primary_taxonomy );
 
@@ -66,7 +70,7 @@ class Test_Primary_Taxonomy extends WP_UnitTestCase {
 
 		add_filter( 'wppt_get_settings', array( $this, 'filter_wppt_get_settings' ) );
 
-		$primary_taxonomy = wppt_get_primary_taxonomies( self::$post );
+		$primary_taxonomy = Functions\get_primary_taxonomies( self::$post );
 
 		$this->assertNotContains( $tax, $primary_taxonomy );
 		$this->assertContains( 'category', $primary_taxonomy );
@@ -86,7 +90,7 @@ class Test_Primary_Taxonomy extends WP_UnitTestCase {
 		register_taxonomy( $tax2, $post_type, array( 'hierarchical' => true ) );
 
 		// Update plugin settings option
-		update_option( WP_Primary_Terms_Settings::OPTION_KEY, array( $tax1, $tax2 ) );
+		update_option( Admin\WP_Primary_Terms_Settings::OPTION_KEY, array( $tax1, $tax2 ) );
 
 		$post = self::factory()->post->create_and_get(
 			array(
@@ -95,7 +99,7 @@ class Test_Primary_Taxonomy extends WP_UnitTestCase {
 			)
 		);
 
-		$primary_taxonomy = wppt_get_primary_taxonomies( $post );
+		$primary_taxonomy = Functions\get_primary_taxonomies( $post );
 
 		$this->assertNotContains( 'category', $primary_taxonomy );
 		$this->assertNotContains( $tax1, $primary_taxonomy );
