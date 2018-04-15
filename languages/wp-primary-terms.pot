@@ -13,30 +13,34 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: includes/admin/class-wp-primary-terms-admin.php:140
+#: includes/classes/admin/class-wp-primary-terms-admin.php:154
 msgid "Reset Primary"
 msgstr ""
 
-#: includes/admin/class-wp-primary-terms-admin.php:141
+#: includes/classes/admin/class-wp-primary-terms-admin.php:155
 msgid "Set Primary"
 msgstr ""
 
-#: includes/admin/class-wp-primary-terms-admin.php:143
+#: includes/classes/admin/class-wp-primary-terms-admin.php:158
 msgid "Primary"
 msgstr ""
 
-#: includes/admin/class-wp-primary-terms-settings.php:66
+#: includes/classes/admin/class-wp-primary-terms-settings.php:68
 msgid "WP Primary Terms Settings"
 msgstr ""
 
-#: includes/admin/class-wp-primary-terms-settings.php:88
+#: includes/classes/admin/class-wp-primary-terms-settings.php:90
 msgid "Taxonomies"
 msgstr ""
 
-#: includes/admin/class-wp-primary-terms-settings.php:108
+#: includes/classes/admin/class-wp-primary-terms-settings.php:109
 msgid "Settings updated."
 msgstr ""
 
-#: includes/admin/class-wp-primary-terms-settings.php:150
+#: includes/classes/admin/class-wp-primary-terms-settings.php:144
+msgid "Toggle primary term support for the taxonomies."
+msgstr ""
+
+#: includes/classes/admin/class-wp-primary-terms-settings.php:157
 msgid "Primary Terms"
 msgstr ""
