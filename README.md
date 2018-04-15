@@ -18,7 +18,17 @@ Allow to designate a primary category for posts and custom post types
 2. Activate WP Primary Terms through the 'Plugins' menu in WordPress.
 ## Screenshots ##
 
+### Set/Reset Primary Terms ###
+![Settings - Rating Images](http://g.recordit.co/q2hp7IKebJ.gif)
 
+### Settings ###
+![Settings](https://cldup.com/MUx0BoYdW0.png)
+
+## Helpful Filter ##
+##### wppt_get_primary_taxonomies
+This filter allow you to toggle primary term support for the post's taxonomies. Applied to the list of taxonomies returned by the `wppt_get_primary_taxonomies` function. This filter receive two parameters:
+  * $primary_taxonomies - The primary taxonomies name list which are enabled from plugin settings
+  * $post_type - The post type of the current post
 
 ## Changelog ##
 

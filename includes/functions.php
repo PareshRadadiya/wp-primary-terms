@@ -23,17 +23,17 @@ function wppt_get_primary_taxonomies( $post = null ) {
 		$post = get_post();
 	}
 
-	$post_type   = get_post_type( $post );
-	$taxonomies  = get_object_taxonomies( $post_type );
-	$settings    = WP_Primary_Terms_Settings::get_instance()->get_settings();
-	$primary_tax = array();
+	$post_type          = get_post_type( $post );
+	$taxonomies         = get_object_taxonomies( $post_type );
+	$settings           = WP_Primary_Terms_Settings::get_instance()->get_settings();
+	$primary_taxonomies = array();
 
 	// Setup primary taxonomies array that are enabled in the settings.
 	foreach ( $taxonomies as $taxonomy ) {
 		if ( in_array( $taxonomy, $settings, true ) && is_taxonomy_hierarchical( $taxonomy ) ) {
-			$primary_tax[] = $taxonomy;
+			$primary_taxonomies[] = $taxonomy;
 		}
 	}
 
-	return apply_filters( 'wppt_get_primary_taxonomies', $primary_tax, $post_type );
+	return apply_filters( 'wppt_get_primary_taxonomies', $primary_taxonomies, $post_type );
 }
