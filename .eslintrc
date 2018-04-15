@@ -9,7 +9,8 @@
     "wp": true,
     "window": true,
     "document": true,
-    "wp_primary_terms_vars": true
+    "wpPrimaryTermsVars": true,
+    "jQuery": true
   },
   "rules": {
     "yoda": [ 2 ],

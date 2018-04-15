@@ -99,7 +99,7 @@ class WP_Primary_Terms_Admin {
 			);
 		}
 
-		wp_localize_script( 'wp-primary-terms-admin-script', 'wp_primary_terms_vars', $tax_data );
+		wp_localize_script( 'wp-primary-terms-admin-script', 'wpPrimaryTermsVars', $tax_data );
 	}
 
 	/**

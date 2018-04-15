@@ -4,7 +4,7 @@
  *
  * Licensed under the GPLv2+ license.
  */
-( function( window, document, $, undefined ) {
+( function( window, document, $ ) {
 	'use strict';
 
 	let primaryButtonUITemplate;
@@ -181,7 +181,7 @@
 		 */
 		setPrimaryTerm( termID = 0 ) {
 			this.primaryInput.value = termID;
-			if ( 0 < termID ) {
+			if ( termID > 0 ) {
 				// Check "All Categories" item
 				document.getElementById( `in-${ this.taxonomy.name }-${ termID }` ).checked = true;
 				// Check Most used item
@@ -196,6 +196,6 @@
 	window.onload = function() {
 		primaryButtonUITemplate = wp.template( 'wp-primary-term-button' );
 		// Loop through each taxonomy and init WPPrimaryTerms class
-		wp_primary_terms_vars.map( taxonomy => new WPPrimaryTerms( taxonomy ).init() );
+		wpPrimaryTermsVars.map( taxonomy => new WPPrimaryTerms( taxonomy ).init() );
 	};
 }( window, document, jQuery ) );
