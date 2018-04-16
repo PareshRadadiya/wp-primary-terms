@@ -5,55 +5,66 @@
  * Copyright (c) 2018 Paresh
  * Licensed under the GPLv2+ license.
  */
-ul[id$='checklist'], ul[id$='checklist-pop']  {
-  li {
+ul[id$="checklist"],
+ul[id$="checklist-pop"] {
 
-	clear: both;
+	li {
 
-	& > label {
-	  display: inline-block;
-	}
+		clear: both;
 
-	span.primary-term-button {
-	  display: none;
-	  text-align: right;
-	  float: right;
-
-	  .toggle-primary-term {
-		cursor: pointer;
-	  }
-	}
-
-	&:hover {
-	  > span.primary-term-button {
-		display: inline-block;
-	  }
-	}
-
-	&.primary-term {
-
-	  > label {
-		font-weight: bold;
-	  }
-
-	  > span.primary-term-button {
-		display: inline-block;
-		.toggle-primary-term {
-		  display: none;
+		& > label {
+			display: inline-block;
 		}
-	  }
 
-	  &:hover {
-		> span.primary-term-button {
-		  label {
+		span.primary-term-button {
 			display: none;
-		  }
-		  .toggle-primary-term {
-			display: block;
-			color: #a00;
-		  }
+			text-align: right;
+			float: right;
+
+			.toggle-primary-term {
+				cursor: pointer;
+			}
 		}
-	  }
+
+		&:hover {
+
+			> span.primary-term-button {
+				display: inline-block;
+			}
+		}
+
+		&.primary-term {
+
+			> label {
+				font-weight: 600;
+			}
+
+			> span.primary-term-button {
+				display: inline-block;
+
+				.toggle-primary-term {
+					display: none;
+				}
+
+				label {
+					font-weight: 600;
+				}
+			}
+
+			&:hover {
+
+				> span.primary-term-button {
+
+					label {
+						display: none;
+					}
+
+					.toggle-primary-term {
+						display: block;
+						color: #a00;
+					}
+				}
+			}
+		}
 	}
-  }
 }

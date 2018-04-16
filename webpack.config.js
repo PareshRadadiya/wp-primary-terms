@@ -31,12 +31,6 @@ const config = {
 				]
 			},
 
-			// Expose accounting.js for plugin usage.
-			{
-				test: require.resolve( 'accounting' ),
-				loader: 'expose-loader?accounting'
-			},
-
 			// Create RTL styles.
 			{
 				test: /\.css$/,
