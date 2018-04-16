@@ -106,7 +106,13 @@ class WP_Primary_Terms_Settings {
 	 * @return array $input Sanitized value
 	 */
 	public function settings_sanitize( $input = array() ) {
-		add_settings_error( self::NOTICE_KEY, '', __( 'Settings updated.', 'wp-primary-terms' ), 'updated' );
+		add_settings_error(
+			self::NOTICE_KEY,
+			'',
+			__( 'Settings updated.', 'wp-primary-terms' ),
+			'updated'
+		);
+
 		return $input;
 	}
 
@@ -134,9 +140,12 @@ class WP_Primary_Terms_Settings {
 				<input
 					type="checkbox" name="wp_primary_terms_settings[]"
 					id="<?php esc_attr_e( $tax_name ); ?>"
-					value="<?php esc_attr_e( $tax_name ); ?>" <?php checked( in_array( $tax_name, $settings, true ) ); ?>
+					value="<?php esc_attr_e( $tax_name ); ?>"
+					<?php checked( in_array( $tax_name, $settings, true ) ); ?>
 				/>
-				<label for="<?php esc_attr_e( $tax_name ); ?>"><?php esc_html_e( $taxonomy->label ); ?></label>
+				<label for="<?php esc_attr_e( $tax_name ); ?>">
+					<?php esc_html_e( $taxonomy->label ); ?>
+				</label>
 			</p>
 		<?php endforeach; ?>
 

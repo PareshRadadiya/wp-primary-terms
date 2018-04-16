@@ -151,8 +151,9 @@ class WP_Primary_Terms_Admin {
 		<script type="text/html" id="tmpl-wp-primary-term-button">
 			<span class="primary-term-button">
 				<a class="toggle-primary-term">
-					{{ data.isPrimary ? '<?php esc_html_e( 'Reset Primary', 'wp-primary-terms' ); ?>
-					' : '<?php esc_html_e( 'Set Primary', 'wp-primary-terms' ); ?>' }}
+					{{ data.isPrimary ?
+					'<?php esc_html_e( 'Reset Primary', 'wp-primary-terms' ); ?>'
+					:'<?php esc_html_e( 'Set Primary', 'wp-primary-terms' ); ?>' }}
 				</a>
 				<# if ( data.isPrimary ) { #>
 					<label><?php esc_html_e( 'Primary', 'wp-primary-terms' ); ?></label>
@@ -196,7 +197,9 @@ class WP_Primary_Terms_Admin {
 	public function save_primary_term( $post_id, $taxonomy ) {
 		$meta_key = self::KEY_PREFIX . $taxonomy;
 
-		if ( ! isset( $_POST[ 'wp_primary_' . $taxonomy . '_nonce' ] ) || ! wp_verify_nonce( $_POST[ 'wp_primary_' . $taxonomy . '_nonce' ], 'wp-save-primary-' . $taxonomy ) ) {
+		if ( ! isset( $_POST[ 'wp_primary_' . $taxonomy . '_nonce' ] )
+			|| ! wp_verify_nonce( $_POST[ 'wp_primary_' . $taxonomy . '_nonce' ], 'wp-save-primary-' . $taxonomy )
+		) {
 			return;
 		}
 
