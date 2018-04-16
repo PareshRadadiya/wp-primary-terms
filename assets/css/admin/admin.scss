@@ -8,54 +8,52 @@
 ul[id$='checklist'], ul[id$='checklist-pop']  {
   li {
 
-    clear: both;
+	clear: both;
 
-    & > label {
-      display: inline-block;
-    }
+	& > label {
+	  display: inline-block;
+	}
 
-    span.primary-term-button {
-      display: none;
-      text-align: right;
-      float: right;
+	span.primary-term-button {
+	  display: none;
+	  text-align: right;
+	  float: right;
 
-      .toggle-primary-term {
-        cursor: pointer;
-      }
-    }
+	  .toggle-primary-term {
+		cursor: pointer;
+	  }
+	}
 
-    &:hover {
-      span.primary-term-button {
-        display: inline-block;
-      }
-    }
+	&:hover {
+	  > span.primary-term-button {
+		display: inline-block;
+	  }
+	}
 
-    &.primary-term {
+	&.primary-term {
 
-      label {
-        font-weight: bold;
-      }
+	  > label {
+		font-weight: bold;
+	  }
 
-      span.primary-term-button {
-        display: inline-block;
-        .toggle-primary-term {
-          display: none;
-        }
-      }
+	  > span.primary-term-button {
+		display: inline-block;
+		.toggle-primary-term {
+		  display: none;
+		}
+	  }
 
-      &:hover {
-        span.primary-term-button {
-          label {
-            display: none;
-          }
-          .toggle-primary-term {
-            display: block;
-            color: #a00;
-          }
-        }
-      }
-
-    }
-
+	  &:hover {
+		> span.primary-term-button {
+		  label {
+			display: none;
+		  }
+		  .toggle-primary-term {
+			display: block;
+			color: #a00;
+		  }
+		}
+	  }
+	}
   }
 }
