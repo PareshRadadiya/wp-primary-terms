@@ -25,14 +25,14 @@ function get_primary_taxonomies( $post = null ) {
 	}
 
 	$post_type          = get_post_type( $post );
-	$taxonomies         = get_object_taxonomies( $post_type );
+	$taxonomies         = get_object_taxonomies( $post_type, 'object' );
 	$settings           = \TenUp\WpPrimaryTerms\Admin\WP_Primary_Terms_Settings::get_instance()->get_settings();
 	$primary_taxonomies = array();
 
 	// Setup primary taxonomies array that are enabled in the settings.
 	foreach ( $taxonomies as $taxonomy ) {
-		if ( in_array( $taxonomy, $settings, true ) && is_taxonomy_hierarchical( $taxonomy ) ) {
-			$primary_taxonomies[] = $taxonomy;
+		if ( in_array( $taxonomy->name, $settings, true ) && $taxonomy->hierarchical ) {
+			$primary_taxonomies[] = $taxonomy->name;
 		}
 	}
 
