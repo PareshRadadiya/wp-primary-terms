@@ -199,7 +199,7 @@
 		}
 
 		/**
-		 * Determines where taxonomy meta-box exists or not on a current page
+		 * Determines whether taxonomy meta-box exists or not on a current page
 		 * @returns {boolean}
 		 */
 		isTaxonomyMetaBoxExists() {

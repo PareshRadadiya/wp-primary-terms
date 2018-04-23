@@ -19,7 +19,6 @@
     "babel-eslint": "^8.0.3",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "clean-webpack-plugin": "^0.1.17",
@@ -44,16 +43,9 @@
     "wp-pot": "latest"
   },
   "dependencies": {
-    "accounting": "latest",
     "eslint-config-wordpress": "^2.0.0",
-    "float-labels.js": "latest",
-    "flot": "^0.8.0-alpha",
-    "hint.css": "^2.5.0",
     "npm": "^5.7.1",
-    "query-string": "^5.0.0",
-    "querystringify": "^1.0.0",
-    "script-loader": "^0.7.2",
-    "uiblocker": "latest"
+    "script-loader": "^0.7.2"
   },
   "engines": {
     "node": "8.9.1",
