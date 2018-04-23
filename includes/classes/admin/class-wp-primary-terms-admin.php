@@ -55,18 +55,13 @@ class WP_Primary_Terms_Admin {
 	 * @since 1.0.0
 	 */
 	public function include_scripts() {
-		global $pagenow, $post;
+		global $post;
 
-		// Don't include scripts unless add/edit post
-		if ( 'post-new.php' !== $pagenow && 'post.php' !== $pagenow ) {
-			return;
-		}
+		$is_primary_tax_post = $this->is_primary_taxonomies_post_page();
 
-		// Get primary taxonomies
-		$taxonomies = self::get_primary_taxonomies();
-
-		// If we have no taxonomies with primary support, there is no need to continue
-		if ( empty( $taxonomies ) ) {
+		// If we have no taxonomies with primary support is current post edit page,
+		// there is no need to continue
+		if ( false === $is_primary_tax_post ) {
 			return;
 		}
 
@@ -89,7 +84,9 @@ class WP_Primary_Terms_Admin {
 			WP_PRIMARY_TERMS_VERSION
 		);
 
-		$tax_data = array();
+		// Get primary taxonomies
+		$taxonomies = self::get_primary_taxonomies();
+		$tax_data   = array();
 
 		// Loop through all of primary taxonomies and prepare taxonomies data array.
 		foreach ( $taxonomies as $taxonomy ) {
@@ -108,6 +105,15 @@ class WP_Primary_Terms_Admin {
 	 * @since 1.0.0
 	 */
 	public function print_primary_terms_templates() {
+
+		$is_primary_tax_post = $this->is_primary_taxonomies_post_page();
+
+		// If we have no taxonomies with primary support is current post edit page,
+		// there is no need to continue
+		if ( false === $is_primary_tax_post ) {
+			return;
+		}
+
 		$this->print_toggle_primary_term_button_template();
 		$this->print_primary_term_input_template();
 	}
@@ -210,6 +216,29 @@ class WP_Primary_Terms_Admin {
 		} else {
 			delete_post_meta( $post_id, $meta_key );
 		}
+	}
+
+	/**
+	 * Determines whether a current page is a post page and has primary taxonomies
+	 *
+	 * @return bool
+	 */
+	public function is_primary_taxonomies_post_page() {
+		global $pagenow;
+
+		// Don't include scripts unless add/edit post
+		if ( 'post-new.php' !== $pagenow && 'post.php' !== $pagenow ) {
+			return false;
+		}
+
+		// Get primary taxonomies
+		$taxonomies = self::get_primary_taxonomies();
+
+		if ( empty( $taxonomies ) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

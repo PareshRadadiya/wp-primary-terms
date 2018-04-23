@@ -4,7 +4,7 @@
  *
  * Licensed under the GPLv2+ license.
  */
-( function( window, document, $ ) {
+( function( window, document, $, undefined ) {
 	'use strict';
 
 	let setPrimaryButtonTamplate, reSetPrimaryButtonTamplate;
@@ -22,9 +22,13 @@
 		 * Initializations
 		 */
 		init() {
-			this.buildCache();
-			this.render();
-			this.bindEvents();
+			const isTaxonomyMetaBoxExists = this.isTaxonomyMetaBoxExists();
+			// Go further only if page has a taxonomy meta-box
+			if ( isTaxonomyMetaBoxExists ) {
+				this.buildCache();
+				this.render();
+				this.bindEvents();
+			}
 		}
 
 		/**
@@ -32,9 +36,13 @@
 		 */
 		buildCache() {
 			this.taxonomyMetaBox = document.getElementById( `taxonomy-${ this.taxonomy.name }` );
-			this.$checkList = $( document.getElementById( `${ this.taxonomy.name }checklist` ) );
-			this.termListItems = this.taxonomyMetaBox.querySelectorAll( '.categorychecklist li' );
-			this.primaryInputUITemplate = wp.template( `wp-primary-${ this.taxonomy.name }-input` );
+			if ( this.taxonomyMetaBox ) {
+				this.$checkList = $( document.getElementById( `${ this.taxonomy.name }checklist` ) );
+				this.termListItems = this.taxonomyMetaBox.querySelectorAll( '.categorychecklist li' );
+				this.primaryInputUITemplate = wp.template( `wp-primary-${ this.taxonomy.name }-input` );
+				return true;
+			}
+			return false;
 		}
 
 		/**
@@ -189,13 +197,26 @@
 				}
 			}
 		}
+
+		/**
+		 * Determines where taxonomy meta-box exists or not on a current page
+		 * @returns {boolean}
+		 */
+		isTaxonomyMetaBoxExists() {
+			this.taxonomyMetaBox = document.getElementById( `taxonomy-${ this.taxonomy.name }` );
+			return !! this.taxonomyMetaBox;
+		}
 	}
 
+	// Kick it off
 	window.onload = function() {
-		const primaryButtonUITemplate = wp.template( 'wp-primary-term-button' );
-		setPrimaryButtonTamplate = primaryButtonUITemplate( { isPrimary: false } );
-		reSetPrimaryButtonTamplate = primaryButtonUITemplate( { isPrimary: true } );
-		// Loop through each taxonomy and init WPPrimaryTerms class
-		wpPrimaryTermsVars.map( taxonomy => new WPPrimaryTerms( taxonomy ).init() );
+		if ( wpPrimaryTermsVars !== undefined && wpPrimaryTermsVars.length > 0 ) {
+			const primaryButtonUITemplate = wp.template( 'wp-primary-term-button' );
+			setPrimaryButtonTamplate = primaryButtonUITemplate( { isPrimary: false } );
+			reSetPrimaryButtonTamplate = primaryButtonUITemplate( { isPrimary: true } );
+			// Loop through each taxonomy and init WPPrimaryTerms class
+			wpPrimaryTermsVars.map( taxonomy => new WPPrimaryTerms( taxonomy ).init() );
+		}
+
 	};
 }( window, document, jQuery ) );
